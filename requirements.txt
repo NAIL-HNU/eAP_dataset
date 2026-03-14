@@ -1,0 +1,5 @@
+# Core dependencies for handle_anno.py (Python 3.10.0)
+opencv-python==4.11.0.86
+numpy==2.2.6
+tqdm==4.67.1
+PyYAML==6.0.2

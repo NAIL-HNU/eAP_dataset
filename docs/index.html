@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>eAP Dataset — Event-camera Autonomous Perception</title>
+  <meta name="description" content="eAP: A multi-modal dataset with event camera, RGB imagery, and 3D annotations for autonomous driving perception and TTC estimation." />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary:   { 50: '#eef7ff', 100: '#d9edff', 200: '#bce0ff', 300: '#8eccff', 400: '#59b0ff', 500: '#3b91ff', 600: '#1a6ef5', 700: '#1459e1', 800: '#1748b6', 900: '#163e8f', 950: '#122757' },
+            dark:      { 50: '#f6f6f7', 100: '#e2e3e5', 200: '#c4c6cb', 300: '#a0a3aa', 400: '#7b7f88', 500: '#60646e', 600: '#4d5058', 700: '#414349', 800: '#383a3f', 900: '#212226', 950: '#131316' },
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+          },
+        },
+      },
+    }
+  </script>
+
+  <!-- Inter + JetBrains Mono fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* Custom animations */
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-up {
+      animation: fade-up 0.7s ease-out both;
+    }
+    .delay-100 { animation-delay: 0.1s; }
+    .delay-200 { animation-delay: 0.2s; }
+    .delay-300 { animation-delay: 0.3s; }
+    .delay-400 { animation-delay: 0.4s; }
+
+    /* Gradient text */
+    .text-gradient {
+      background: linear-gradient(135deg, #3b91ff 0%, #8eccff 50%, #59b0ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Glow effect for hero */
+    .glow-ring {
+      box-shadow:
+        0 0 60px rgba(59, 145, 255, 0.15),
+        0 0 120px rgba(59, 145, 255, 0.05);
+    }
+
+    /* Glass card */
+    .glass {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Smooth navbar */
+    .nav-blur {
+      backdrop-filter: saturate(180%) blur(16px);
+      background: rgba(19, 19, 22, 0.75);
+    }
+
+    /* Tab active state */
+    .tab-btn.active {
+      color: #3b91ff;
+      border-color: #3b91ff;
+    }
+
+    /* Stat counter */
+    .stat-number {
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Grid pattern background */
+    .grid-bg {
+      background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+  </style>
+</head>
+
+<body class="bg-dark-950 text-gray-200 font-sans antialiased">
+
+  <!-- ============================================================ -->
+  <!-- NAVBAR                                                        -->
+  <!-- ============================================================ -->
+  <nav id="navbar" class="fixed top-0 inset-x-0 z-50 nav-blur border-b border-white/5 transition-all duration-300">
+    <div class="max-w-6xl mx-auto flex items-center justify-between px-6 h-16">
+      <a href="#hero" class="text-lg font-bold tracking-tight text-white">
+        <span class="text-primary-400">e</span>AP Dataset
+      </a>
+      <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-400">
+        <a href="#overview"    class="hover:text-white transition">Overview</a>
+        <a href="#modalities"  class="hover:text-white transition">Data</a>
+        <a href="#annotations" class="hover:text-white transition">Annotations</a>
+        <a href="#explore"     class="hover:text-white transition">Explore</a>
+        <a href="#benchmark"   class="hover:text-white transition">Benchmark</a>
+        <a href="#download"    class="hover:text-white transition">Download</a>
+      </div>
+      <!-- Mobile menu button -->
+      <button id="mobile-menu-btn" class="md:hidden text-gray-400 hover:text-white" aria-label="Menu">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="md:hidden hidden border-t border-white/5 px-6 py-4 space-y-3 text-sm font-medium text-gray-400">
+      <a href="#overview"    class="block hover:text-white">Overview</a>
+      <a href="#modalities"  class="block hover:text-white">Data</a>
+      <a href="#annotations" class="block hover:text-white">Annotations</a>
+      <a href="#explore"     class="block hover:text-white">Explore</a>
+      <a href="#benchmark"   class="block hover:text-white">Benchmark</a>
+      <a href="#download"    class="block hover:text-white">Download</a>
+    </div>
+  </nav>
+
+  <!-- ============================================================ -->
+  <!-- HERO                                                          -->
+  <!-- ============================================================ -->
+  <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden grid-bg">
+    <!-- Background decorative elements -->
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-600/10 rounded-full blur-[128px]"></div>
+      <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-primary-400/5 rounded-full blur-[100px]"></div>
+    </div>
+
+    <div class="relative z-10 max-w-4xl mx-auto px-6 text-center">
+      <!-- Badge -->
+      <div class="animate-fade-up inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary-500/20 bg-primary-500/5 text-primary-300 text-sm font-medium mb-8">
+        <span class="w-2 h-2 rounded-full bg-primary-400 animate-pulse"></span>
+        Multi-modal Autonomous Driving Dataset
+      </div>
+
+      <!-- Title -->
+      <h1 class="animate-fade-up delay-100 text-5xl md:text-7xl font-extrabold tracking-tight leading-[1.1] mb-6">
+        <span class="text-gradient">eAP</span>
+        <span class="text-white"> Dataset</span>
+      </h1>
+
+      <!-- Subtitle -->
+      <p class="animate-fade-up delay-200 text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
+        A large-scale dataset combining <strong class="text-gray-200">event camera</strong> and
+        <strong class="text-gray-200">RGB imagery</strong> with precise
+        <strong class="text-gray-200">3D annotations</strong> for autonomous driving perception and
+        time-to-collision estimation.
+      </p>
+
+      <!-- CTA Buttons -->
+      <div class="animate-fade-up delay-300 flex flex-wrap items-center justify-center gap-4">
+        <a href="#download" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary-600 hover:bg-primary-500 text-white font-semibold text-sm transition shadow-lg shadow-primary-600/20">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V3"/></svg>
+          Download Dataset
+        </a>
+        <a href="#explore" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-white/10 hover:border-white/20 bg-white/5 hover:bg-white/10 text-white font-semibold text-sm transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+          Explore Samples
+        </a>
+        <a href="https://arxiv.org" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-white/10 hover:border-white/20 bg-white/5 hover:bg-white/10 text-white font-semibold text-sm transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/></svg>
+          Paper
+        </a>
+      </div>
+
+      <!-- Scroll indicator -->
+      <div class="animate-fade-up delay-400 mt-16">
+        <a href="#overview" class="inline-block text-gray-500 hover:text-gray-300 transition">
+          <svg class="w-5 h-5 animate-bounce" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- OVERVIEW / STATS                                              -->
+  <!-- ============================================================ -->
+  <section id="overview" class="py-24 border-t border-white/5">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="reveal text-center mb-16">
+        <p class="text-primary-400 text-sm font-semibold tracking-widest uppercase mb-3">Overview</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-white">A New Benchmark for Event-based Perception</h2>
+        <p class="mt-4 text-gray-400 max-w-2xl mx-auto leading-relaxed">
+          The eAP dataset provides synchronized event camera streams and RGB images captured from
+          real-world driving scenarios, paired with high-quality 3D bounding box annotations,
+          object tracking, and time-to-collision (TTC) labels.
+        </p>
+      </div>
+
+      <!-- Stats grid -->
+      <div class="reveal grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+        <div class="glass rounded-2xl p-6 text-center">
+          <div class="stat-number text-3xl md:text-4xl font-extrabold text-white mb-1">--</div>
+          <div class="text-sm text-gray-400">Sequences</div>
+        </div>
+        <div class="glass rounded-2xl p-6 text-center">
+          <div class="stat-number text-3xl md:text-4xl font-extrabold text-white mb-1">--</div>
+          <div class="text-sm text-gray-400">Annotated Frames</div>
+        </div>
+        <div class="glass rounded-2xl p-6 text-center">
+          <div class="stat-number text-3xl md:text-4xl font-extrabold text-white mb-1">--</div>
+          <div class="text-sm text-gray-400">3D Bounding Boxes</div>
+        </div>
+        <div class="glass rounded-2xl p-6 text-center">
+          <div class="stat-number text-3xl md:text-4xl font-extrabold text-white mb-1">--</div>
+          <div class="text-sm text-gray-400">Object Classes</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- DATA MODALITIES                                               -->
+  <!-- ============================================================ -->
+  <section id="modalities" class="py-24 border-t border-white/5 grid-bg">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="reveal text-center mb-16">
+        <p class="text-primary-400 text-sm font-semibold tracking-widest uppercase mb-3">Data Modalities</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-white">Multi-sensor Synchronized Capture</h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Event Camera -->
+        <div class="reveal glass rounded-2xl p-6 hover:border-primary-500/30 transition-colors group">
+          <div class="w-12 h-12 rounded-xl bg-primary-500/10 flex items-center justify-center mb-4 group-hover:bg-primary-500/20 transition">
+            <svg class="w-6 h-6 text-primary-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg>
+          </div>
+          <h3 class="text-lg font-semibold text-white mb-2">Event Camera</h3>
+          <p class="text-sm text-gray-400 leading-relaxed">
+            High temporal resolution event streams capturing brightness changes at microsecond precision.
+            Ideal for fast-moving objects and HDR scenes.
+          </p>
+        </div>
+
+        <!-- RGB Camera -->
+        <div class="reveal glass rounded-2xl p-6 hover:border-primary-500/30 transition-colors group">
+          <div class="w-12 h-12 rounded-xl bg-primary-500/10 flex items-center justify-center mb-4 group-hover:bg-primary-500/20 transition">
+            <svg class="w-6 h-6 text-primary-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z"/><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z"/></svg>
+          </div>
+          <h3 class="text-lg font-semibold text-white mb-2">RGB Camera</h3>
+          <p class="text-sm text-gray-400 leading-relaxed">
+            Synchronized high-resolution RGB images providing rich texture and color information for
+            visual perception tasks.
+          </p>
+        </div>
+
+        <!-- 3D Annotations -->
+        <div class="reveal glass rounded-2xl p-6 hover:border-primary-500/30 transition-colors group">
+          <div class="w-12 h-12 rounded-xl bg-primary-500/10 flex items-center justify-center mb-4 group-hover:bg-primary-500/20 transition">
+            <svg class="w-6 h-6 text-primary-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9"/></svg>
+          </div>
+          <h3 class="text-lg font-semibold text-white mb-2">3D Annotations</h3>
+          <p class="text-sm text-gray-400 leading-relaxed">
+            Precise 3D bounding boxes with object tracking IDs, velocity estimation,
+            and per-frame occlusion ratios in ego-vehicle coordinates.
+          </p>
+        </div>
+
+        <!-- LiDAR (Coming Soon) -->
+        <div class="reveal glass rounded-2xl p-6 border-dashed hover:border-primary-500/30 transition-colors group relative">
+          <span class="absolute top-4 right-4 text-[10px] font-bold tracking-wider uppercase text-primary-400 bg-primary-500/10 px-2 py-0.5 rounded-full">Coming Soon</span>
+          <div class="w-12 h-12 rounded-xl bg-primary-500/10 flex items-center justify-center mb-4 group-hover:bg-primary-500/20 transition">
+            <svg class="w-6 h-6 text-primary-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 3.75H6A2.25 2.25 0 003.75 6v1.5M16.5 3.75H18A2.25 2.25 0 0120.25 6v1.5m0 9V18A2.25 2.25 0 0118 20.25h-1.5m-9 0H6A2.25 2.25 0 013.75 18v-1.5M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          </div>
+          <h3 class="text-lg font-semibold text-white mb-2">LiDAR</h3>
+          <p class="text-sm text-gray-400 leading-relaxed">
+            3D point cloud data with LiDAR-based annotations for comprehensive
+            depth perception and cross-modal validation.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- ANNOTATIONS DETAIL                                            -->
+  <!-- ============================================================ -->
+  <section id="annotations" class="py-24 border-t border-white/5">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="reveal text-center mb-16">
+        <p class="text-primary-400 text-sm font-semibold tracking-widest uppercase mb-3">Annotations</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-white">Rich, Multi-dimensional Labels</h2>
+      </div>
+
+      <div class="reveal grid md:grid-cols-2 gap-8">
+        <!-- Left: annotation types list -->
+        <div class="space-y-6">
+          <div class="flex gap-4">
+            <div class="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center shrink-0 mt-1">
+              <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+            </div>
+            <div>
+              <h4 class="font-semibold text-white">3D Bounding Boxes</h4>
+              <p class="text-sm text-gray-400 mt-1">7-DoF cuboid annotations (x, y, z, l, w, h, yaw) in ego-vehicle coordinate system with front-camera projection.</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <div class="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center shrink-0 mt-1">
+              <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+            </div>
+            <div>
+              <h4 class="font-semibold text-white">Object Tracking</h4>
+              <p class="text-sm text-gray-400 mt-1">Consistent tracking IDs across frames, enabling trajectory analysis and motion pattern study.</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <div class="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center shrink-0 mt-1">
+              <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+            </div>
+            <div>
+              <h4 class="font-semibold text-white">Velocity & TTC</h4>
+              <p class="text-sm text-gray-400 mt-1">Per-object ego-relative speed vectors and time-to-collision (TTC) / headway TTC (HTTC) labels for safety-critical perception.</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <div class="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center shrink-0 mt-1">
+              <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+            </div>
+            <div>
+              <h4 class="font-semibold text-white">Occlusion & Calibration</h4>
+              <p class="text-sm text-gray-400 mt-1">Occlusion ratio per object, full intrinsic/extrinsic calibration, and temporal alignment between event and RGB sensors.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: class table -->
+        <div class="glass rounded-2xl p-6">
+          <h4 class="font-semibold text-white mb-4">Supported Object Classes</h4>
+          <div class="grid grid-cols-2 gap-2 text-sm">
+            <div class="flex items-center gap-2 text-gray-300"><span class="w-2 h-2 rounded-full bg-blue-400"></span>Car</div>
+            <div class="flex items-center gap-2 text-gray-300"><span class="w-2 h-2 rounded-full bg-blue-400"></span>Bus</div>
+            <div class="flex items-center gap-2 text-gray-300"><span class="w-2 h-2 rounded-full bg-blue-400"></span>Truck</div>
+            <div class="flex items-center gap-2 text-gray-300"><span class="w-2 h-2 rounded-full bg-blue-400"></span>SUV</div>
+            <div class="flex items-center gap-2 text-gray-300"><span class="w-2 h-2 rounded-full bg-green-400"></span>Pedestrian</div>
+            <div class="flex items-center gap-2 text-gray-300"><span class="w-2 h-2 rounded-full bg-yellow-400"></span>Motorcycle</div>
+            <div class="flex items-center gap-2 text-gray-300"><span class="w-2 h-2 rounded-full bg-yellow-400"></span>Bicycle</div>
+            <div class="flex items-center gap-2 text-gray-300"><span class="w-2 h-2 rounded-full bg-yellow-400"></span>Tricycle</div>
+            <div class="flex items-center gap-2 text-gray-300"><span class="w-2 h-2 rounded-full bg-orange-400"></span>Van</div>
+            <div class="flex items-center gap-2 text-gray-300"><span class="w-2 h-2 rounded-full bg-orange-400"></span>Pickup Truck</div>
+            <div class="flex items-center gap-2 text-gray-300"><span class="w-2 h-2 rounded-full bg-purple-400"></span>Traffic Cone</div>
+            <div class="flex items-center gap-2 text-gray-300"><span class="w-2 h-2 rounded-full bg-gray-400"></span>Other</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- EXPLORE / VISUALIZATION                                       -->
+  <!-- ============================================================ -->
+  <section id="explore" class="py-24 border-t border-white/5 grid-bg">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="reveal text-center mb-12">
+        <p class="text-primary-400 text-sm font-semibold tracking-widest uppercase mb-3">Explore</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-white">Sample Visualizations</h2>
+        <p class="mt-4 text-gray-400 max-w-xl mx-auto">
+          Browse sample frames with 3D bounding box projections, BEV (bird's-eye-view) overlays, and event/RGB paired views.
+        </p>
+      </div>
+
+      <!-- Tab buttons -->
+      <div class="reveal flex justify-center gap-2 mb-8">
+        <button class="tab-btn active px-4 py-2 rounded-lg text-sm font-medium border border-transparent hover:border-white/10 transition" data-tab="rgb">RGB + 3D Boxes</button>
+        <button class="tab-btn px-4 py-2 rounded-lg text-sm font-medium text-gray-400 border border-transparent hover:border-white/10 transition" data-tab="event">Event Stream</button>
+        <button class="tab-btn px-4 py-2 rounded-lg text-sm font-medium text-gray-400 border border-transparent hover:border-white/10 transition" data-tab="bev">BEV View</button>
+      </div>
+
+      <!-- Tab content: placeholder area for images/videos -->
+      <div class="reveal">
+        <div id="tab-rgb" class="tab-content">
+          <div class="glass rounded-2xl aspect-video flex items-center justify-center glow-ring">
+            <div class="text-center text-gray-500">
+              <svg class="w-16 h-16 mx-auto mb-4 opacity-30" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0022.5 18.75V5.25A2.25 2.25 0 0020.25 3H3.75A2.25 2.25 0 001.5 5.25v13.5A2.25 2.25 0 003.75 21z"/></svg>
+              <p class="text-sm">RGB frames with projected 3D bounding boxes</p>
+              <p class="text-xs mt-1 text-gray-600">Place images in <code class="font-mono">docs/assets/</code></p>
+            </div>
+          </div>
+        </div>
+        <div id="tab-event" class="tab-content hidden">
+          <div class="glass rounded-2xl aspect-video flex items-center justify-center glow-ring">
+            <div class="text-center text-gray-500">
+              <svg class="w-16 h-16 mx-auto mb-4 opacity-30" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg>
+              <p class="text-sm">Event camera stream visualizations</p>
+              <p class="text-xs mt-1 text-gray-600">Place images in <code class="font-mono">docs/assets/</code></p>
+            </div>
+          </div>
+        </div>
+        <div id="tab-bev" class="tab-content hidden">
+          <div class="glass rounded-2xl aspect-video flex items-center justify-center glow-ring">
+            <div class="text-center text-gray-500">
+              <svg class="w-16 h-16 mx-auto mb-4 opacity-30" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z"/></svg>
+              <p class="text-sm">Bird's-eye-view with object tracks and ego vehicle</p>
+              <p class="text-xs mt-1 text-gray-600">Place images in <code class="font-mono">docs/assets/</code></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- BENCHMARK                                                     -->
+  <!-- ============================================================ -->
+  <section id="benchmark" class="py-24 border-t border-white/5">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="reveal text-center mb-12">
+        <p class="text-primary-400 text-sm font-semibold tracking-widest uppercase mb-3">Benchmark</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-white">Leaderboard</h2>
+        <p class="mt-4 text-gray-400 max-w-xl mx-auto">
+          Evaluate your methods on the eAP benchmark. Leaderboard will be available upon the official dataset release.
+        </p>
+      </div>
+
+      <div class="reveal">
+        <!-- Placeholder leaderboard table -->
+        <div class="glass rounded-2xl overflow-hidden">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b border-white/5 text-left text-gray-400">
+                <th class="px-6 py-4 font-medium">Rank</th>
+                <th class="px-6 py-4 font-medium">Method</th>
+                <th class="px-6 py-4 font-medium">Task</th>
+                <th class="px-6 py-4 font-medium">Metric</th>
+                <th class="px-6 py-4 font-medium">Score</th>
+              </tr>
+            </thead>
+            <tbody class="text-gray-500">
+              <tr>
+                <td colspan="5" class="px-6 py-12 text-center">
+                  <div class="flex flex-col items-center gap-2">
+                    <svg class="w-8 h-8 opacity-30" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 18.75h-9m9 0a3 3 0 013 3h-15a3 3 0 013-3m9 0v-4.5A3.375 3.375 0 0019.875 10.875H4.125A3.375 3.375 0 001.5 14.25v4.5m16.5-13.5V3.75m-9 0V3.75m4.5 0V3.75"/></svg>
+                    <span>Coming Soon</span>
+                    <span class="text-xs text-gray-600">Benchmark tasks: 3D Detection &middot; TTC Estimation &middot; Object Tracking</span>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- DOWNLOAD                                                      -->
+  <!-- ============================================================ -->
+  <section id="download" class="py-24 border-t border-white/5 grid-bg">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="reveal text-center mb-12">
+        <p class="text-primary-400 text-sm font-semibold tracking-widest uppercase mb-3">Download</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-white">Get the Dataset</h2>
+      </div>
+
+      <div class="reveal grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+        <!-- Full Dataset -->
+        <div class="glass rounded-2xl p-6 text-center hover:border-primary-500/30 transition-colors">
+          <div class="w-12 h-12 rounded-xl bg-primary-500/10 flex items-center justify-center mx-auto mb-4">
+            <svg class="w-6 h-6 text-primary-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z"/></svg>
+          </div>
+          <h4 class="font-semibold text-white mb-1">Full Dataset</h4>
+          <p class="text-xs text-gray-500 mb-4">Event + RGB + 3D Annotations</p>
+          <span class="inline-block px-4 py-2 rounded-lg bg-white/5 text-gray-500 text-sm cursor-not-allowed">Coming Soon</span>
+        </div>
+
+        <!-- Annotations Only -->
+        <div class="glass rounded-2xl p-6 text-center hover:border-primary-500/30 transition-colors">
+          <div class="w-12 h-12 rounded-xl bg-primary-500/10 flex items-center justify-center mx-auto mb-4">
+            <svg class="w-6 h-6 text-primary-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
+          </div>
+          <h4 class="font-semibold text-white mb-1">Annotations</h4>
+          <p class="text-xs text-gray-500 mb-4">3D Boxes + Tracking + TTC</p>
+          <span class="inline-block px-4 py-2 rounded-lg bg-white/5 text-gray-500 text-sm cursor-not-allowed">Coming Soon</span>
+        </div>
+
+        <!-- Dev Kit -->
+        <div class="glass rounded-2xl p-6 text-center hover:border-primary-500/30 transition-colors">
+          <div class="w-12 h-12 rounded-xl bg-primary-500/10 flex items-center justify-center mx-auto mb-4">
+            <svg class="w-6 h-6 text-primary-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5"/></svg>
+          </div>
+          <h4 class="font-semibold text-white mb-1">DevKit</h4>
+          <p class="text-xs text-gray-500 mb-4">Tools & Evaluation Scripts</p>
+          <a href="https://github.com" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 text-gray-300 text-sm transition">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- CITATION                                                      -->
+  <!-- ============================================================ -->
+  <section id="citation" class="py-24 border-t border-white/5">
+    <div class="max-w-3xl mx-auto px-6">
+      <div class="reveal text-center mb-8">
+        <p class="text-primary-400 text-sm font-semibold tracking-widest uppercase mb-3">Citation</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-white">Cite Our Work</h2>
+      </div>
+
+      <div class="reveal glass rounded-2xl p-6 relative group">
+        <button id="copy-btn" class="absolute top-4 right-4 p-2 rounded-lg bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white transition" title="Copy to clipboard">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9.75a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184"/></svg>
+        </button>
+<pre class="text-sm text-gray-400 font-mono leading-relaxed overflow-x-auto"><code id="bibtex">@article{eap_dataset,
+  title   = {eAP: Event-camera Autonomous Perception Dataset},
+  author  = {TODO},
+  journal = {TODO},
+  year    = {2025},
+}</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- FOOTER                                                        -->
+  <!-- ============================================================ -->
+  <footer class="border-t border-white/5 py-8">
+    <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-500">
+      <p>&copy; 2025 eAP Dataset. All rights reserved.</p>
+      <div class="flex items-center gap-6">
+        <a href="https://github.com" target="_blank" rel="noopener" class="hover:text-white transition">GitHub</a>
+        <a href="https://arxiv.org" target="_blank" rel="noopener" class="hover:text-white transition">Paper</a>
+        <a href="mailto:contact@example.com" class="hover:text-white transition">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================================ -->
+  <!-- SCRIPTS                                                       -->
+  <!-- ============================================================ -->
+  <script>
+    // --- Mobile menu toggle ---
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+    mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+
+    // --- Tab switching ---
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+        document.getElementById('tab-' + btn.dataset.tab).classList.remove('hidden');
+      });
+    });
+
+    // --- Copy bibtex ---
+    document.getElementById('copy-btn').addEventListener('click', () => {
+      const text = document.getElementById('bibtex').textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.getElementById('copy-btn');
+        btn.innerHTML = '<svg class="w-4 h-4 text-green-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>';
+        setTimeout(() => {
+          btn.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9.75a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184"/></svg>';
+        }, 2000);
+      });
+    });
+
+    // --- Scroll reveal ---
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // --- Navbar active link highlight ---
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('nav a[href^="#"]');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 200) current = s.id;
+      });
+      navLinks.forEach(a => {
+        a.classList.toggle('text-white', a.getAttribute('href') === '#' + current);
+      });
+    });
+  </script>
+</body>
+</html>

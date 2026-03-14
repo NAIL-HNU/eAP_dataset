@@ -1,0 +1,90 @@
+{
+    "raw_data_tag": "EnnTTC_v2",
+    "anno_tag": "20260313_pse75",
+    "filter_name": "first",
+    "storage_dirs": [
+        "/mnt/disk1/20250114",
+        "/mnt/hdd_4T_2/20250114_part2",
+        "/mnt/hdd_4T_2/EnnTTC_dataset/20250115",
+        "/mnt/hdd_4T_2/EnnTTC_dataset/20250116",
+        "/mnt/hdd_4T/20250120"
+    ],
+    "datablob_root": "/mnt/disk1/EnnTTC_dataset/data_blobs",
+    "anno_output_root": "/home/jhang/workspace/nnTTC/nnttc_code_clean/dataset_generation/outputs",
+    "tdr_manifest_path": "/mnt/disk1/EnnTTC_dataset/anno/20260313_pse75/manifest.json",
+    "generate_config": {
+        "img_roi": [0, 0, 1280, 720],
+        "vd_w_range": [10, 1e9],
+        "vd_h_range": [10, 1e9],
+        "vd_h_w_ratio_range": [0, 1e9],
+        "vd_area_range": [0, 1e9],
+        "target_classes": [
+            "car",
+            "truck",
+            "bus",
+            "other_vehicle",
+            "pedestrian",
+            "motorcycle",
+            "tricycle",
+            "bicycle",
+            "pickupTruck",
+            "suv",
+            "van"
+        ],
+        "T_rgb_ego": [[-0.0723649, 0.996978,  0.0282611, 0.0157647],
+                      [ 0.0921669,-0.0215296,  0.995511,  0.849808],
+                      [ 0.993111,  0.0746447, -0.0903303, -1.98875],
+                      [ 0,         0,          0,          1]]
+    },
+    "num_workers_generate": 1,
+    "num_workers_filter": 1,
+    "filter_config": {
+        "ttc": {
+            "filter_by_class": {
+                "valid_class_list": [
+                    "car",
+                    "truck",
+                    "bus",
+                    "other_vehicle",
+                    "pedestrian",
+                    "motorcycle",
+                    "tricycle",
+                    "bicycle",
+                    "pickupTruck",
+                    "suv",
+                    "van"
+                ]
+            },
+            "filter_by_box_h": {
+                "valid_range": [
+                    20,
+                    "Infinity"
+                ],
+                "motorcycle": {
+                    "valid_range": [
+                        10.0,
+                        "Infinity"
+                    ]
+                },
+                "bicycle": {
+                    "valid_range": [
+                        10.0,
+                        "Infinity"
+                    ]
+                },
+                "tricycle": {
+                    "valid_range": [
+                        10.0,
+                        "Infinity"
+                    ]
+                }
+            },
+            "filter_by_occ_ratio": {
+                "valid_range": [
+                    0.0,
+                    0.95
+                ]
+            }
+        }
+    }
+}

@@ -1,0 +1,80 @@
+{   
+    "raw_data_tag": "EnnTTC_v2",
+    "anno_tag": "TROv1",
+    "filter_tag": "TRO_nn",
+    "asset_list": "2JkLL5W891,2Y46OkK3ff,3RUZHwnCwK,4JqUlpyuwJ,6D3yZNewuN,6h5yRW2LGc",
+    "datablob_dir": "/mnt/disk1/EnnTTC_dataset/data_blobs",
+    "anno_save_dir": "/mnt/disk1/EnnTTC_dataset/anno",
+    "filter_config": {
+        "ttc": {
+            "filter_by_class": {
+                "valid_class_list": [
+                    "car",
+                    "truck",
+                    "bus",
+                    "other_vehicle",
+                    "pedestrian",
+                    "motorcycle",
+                    "tricycle",
+                    "bicycle"
+                ]
+            },
+            "filter_by_box3d_y_range": {
+                "valid_range": [-10.0, 20.0]
+            },
+            "filter_by_largebox_h_w_ratio": {
+                "valid_range": [0.0, 10.0],
+                "motorcycle": {
+                    "valid_range": [1.0, 2.0]
+                },
+                "bicycle": {
+                    "valid_range": [1.0, 2.0]
+                },
+                "tricycle": {
+                    "valid_range": [1.0, 2.0]
+                }
+            },
+            "filter_by_h_w_ratio": {
+                "valid_range": [0.0, 10.0],
+                "motorcycle": {
+                    "valid_range": [1.0, 2.0]
+                },
+                "bicycle": {
+                    "valid_range": [1.0, 2.0]
+                },
+                "tricycle": {
+                    "valid_range": [1.0, 2.0]
+                }
+            },
+            "filter_by_box_h": {
+                "valid_range": [10, "Infinity"],
+                "motorcycle": {
+                    "valid_range": [10.0, "Infinity"]
+                },
+                "bicycle": {
+                    "valid_range": [10.0, "Infinity"]
+                },
+                "tricycle": {
+                    "valid_range": [10.0, "Infinity"]
+                }
+            },
+            "filter_by_speed_ego": {
+                "invalid_speed_ego": [-998, -9980]
+            },
+            "filter_by_bboxes_score": {
+                "valid_range": [-1, "Infinity"]
+            },
+            "filter_by_ttc_range": {
+                "valid_range": [-999, "Infinity"]
+            },
+            "filter_by_occ_ratio": {
+                "valid_range": [0.0, 0.95]
+            },
+            "filter_by_vdbox_boxl_iou": {
+                "valid_range": [0.7, "Infinity"]
+            }
+
+        }
+    },
+    "storge_str": "/mnt/disk1/20250114,/mnt/hdd_4T_2/20250114_part2,/mnt/hdd_4T_2/EnnTTC_dataset/20250115,/mnt/hdd_4T_2/EnnTTC_dataset/20250116,/mnt/hdd_4T/20250120"
+}
