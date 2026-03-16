@@ -6,6 +6,16 @@
   <title>eAP Dataset — Toward Deep Representation Learning for Event-enhanced Visual Autonomous Perception</title>
   <meta name="description" content="eAP: The largest multi-modal dataset with event cameras for autonomous driving perception. 58 sequences, 532k+ 3D boxes, 4.8h driving, 236km. IEEE TRO 2025." />
 
+  <!-- Open Graph / Twitter Card -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="eAP Dataset — Event-enhanced Visual Autonomous Perception" />
+  <meta property="og:description" content="The largest event-camera dataset for autonomous driving. 58 sequences, 532k+ 3D boxes, 4.8h driving, 236km. IEEE T-RO 2025." />
+  <meta property="og:image" content="assets/teaser.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="eAP Dataset — Event-enhanced Visual Autonomous Perception" />
+  <meta name="twitter:description" content="The largest event-camera dataset for autonomous driving. 58 sequences, 532k+ 3D boxes, 4.8h driving, 236km. IEEE T-RO 2025." />
+  <meta name="twitter:image" content="assets/teaser.jpg" />
+
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -13,8 +23,7 @@
       theme: {
         extend: {
           colors: {
-            primary:   { 50: '#eef7ff', 100: '#d9edff', 200: '#bce0ff', 300: '#8eccff', 400: '#59b0ff', 500: '#3b91ff', 600: '#1a6ef5', 700: '#1459e1', 800: '#1748b6', 900: '#163e8f', 950: '#122757' },
-            dark:      { 50: '#f6f6f7', 100: '#e2e3e5', 200: '#c4c6cb', 300: '#a0a3aa', 400: '#7b7f88', 500: '#60646e', 600: '#4d5058', 700: '#414349', 800: '#383a3f', 900: '#212226', 950: '#131316' },
+            primary: { 50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd', 400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a8a', 950: '#172554' },
           },
           fontFamily: {
             sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
@@ -35,31 +44,27 @@
       from { opacity: 0; transform: translateY(30px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-    .animate-fade-up {
-      animation: fade-up 0.7s ease-out both;
-    }
+    .animate-fade-up { animation: fade-up 0.7s ease-out both; }
     .delay-100 { animation-delay: 0.1s; }
     .delay-200 { animation-delay: 0.2s; }
     .delay-300 { animation-delay: 0.3s; }
     .delay-400 { animation-delay: 0.4s; }
 
     .text-gradient {
-      background: linear-gradient(135deg, #3b91ff 0%, #8eccff 50%, #59b0ff 100%);
+      background: linear-gradient(135deg, #2563eb 0%, #60a5fa 50%, #3b82f6 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
 
     .glow-ring {
-      box-shadow:
-        0 0 60px rgba(59, 145, 255, 0.15),
-        0 0 120px rgba(59, 145, 255, 0.05);
+      box-shadow: 0 4px 24px rgba(37, 99, 235, 0.12), 0 1px 4px rgba(0,0,0,0.06);
     }
 
     .glass {
-      background: rgba(255, 255, 255, 0.03);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
     }
 
     .reveal {
@@ -74,57 +79,63 @@
 
     .nav-blur {
       backdrop-filter: saturate(180%) blur(16px);
-      background: rgba(19, 19, 22, 0.75);
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 1px 0 #e5e7eb;
     }
 
     .stat-number {
       font-variant-numeric: tabular-nums;
     }
 
+    section[id] {
+      scroll-margin-top: 72px;
+    }
+
     .grid-bg {
+      background-color: #f0f4ff;
       background-image:
-        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+        linear-gradient(rgba(37,99,235,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(37,99,235,0.04) 1px, transparent 1px);
       background-size: 60px 60px;
     }
   </style>
 </head>
 
-<body class="bg-dark-950 text-gray-200 font-sans antialiased">
+<body class="bg-white text-gray-700 font-sans antialiased">
 
   <!-- ============================================================ -->
   <!-- NAVBAR                                                        -->
   <!-- ============================================================ -->
-  <nav id="navbar" class="fixed top-0 inset-x-0 z-50 nav-blur border-b border-white/5 transition-all duration-300">
+  <nav id="navbar" class="fixed top-0 inset-x-0 z-50 nav-blur border-b border-gray-200 transition-all duration-300">
     <div class="max-w-6xl mx-auto flex items-center justify-between px-6 h-16">
-      <a href="#hero" class="text-lg font-bold tracking-tight text-white">
-        <span class="text-primary-400">e</span>AP Dataset
+      <a href="#hero" class="text-lg font-bold tracking-tight text-slate-900">
+        <span class="text-primary-600">e</span>AP Dataset
       </a>
-      <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-400">
-        <a href="#abstract"    class="hover:text-white transition">Abstract</a>
-        <a href="#video"       class="hover:text-white transition">Video</a>
-        <a href="#modalities"  class="hover:text-white transition">Data</a>
-        <a href="#dataset"     class="hover:text-white transition">Dataset</a>
-        <a href="#annotations" class="hover:text-white transition">Annotations</a>
-        <a href="#benchmark"   class="hover:text-white transition">Benchmark</a>
-        <a href="#authors"     class="hover:text-white transition">Authors</a>
-        <a href="#citation"    class="hover:text-white transition">Citation</a>
+      <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-500">
+        <a href="#abstract"    class="hover:text-slate-900 transition">Abstract</a>
+        <a href="#video"       class="hover:text-slate-900 transition">Video</a>
+        <a href="#modalities"  class="hover:text-slate-900 transition">Data</a>
+        <a href="#dataset"     class="hover:text-slate-900 transition">Dataset</a>
+        <a href="#annotations" class="hover:text-slate-900 transition">Annotations</a>
+        <a href="#benchmark"   class="hover:text-slate-900 transition">Benchmark</a>
+        <a href="#authors"     class="hover:text-slate-900 transition">Authors</a>
+        <a href="#citation"    class="hover:text-slate-900 transition">Citation</a>
       </div>
-      <button id="mobile-menu-btn" class="md:hidden text-gray-400 hover:text-white" aria-label="Menu">
+      <button id="mobile-menu-btn" class="md:hidden text-gray-500 hover:text-slate-900" aria-label="Menu">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
         </svg>
       </button>
     </div>
-    <div id="mobile-menu" class="md:hidden hidden border-t border-white/5 px-6 py-4 space-y-3 text-sm font-medium text-gray-400">
-      <a href="#abstract"    class="block hover:text-white">Abstract</a>
-      <a href="#video"       class="block hover:text-white">Video</a>
-      <a href="#modalities"  class="block hover:text-white">Data</a>
-      <a href="#dataset"     class="block hover:text-white">Dataset</a>
-      <a href="#annotations" class="block hover:text-white">Annotations</a>
-      <a href="#benchmark"   class="block hover:text-white">Benchmark</a>
-      <a href="#authors"     class="block hover:text-white">Authors</a>
-      <a href="#citation"    class="block hover:text-white">Citation</a>
+    <div id="mobile-menu" class="md:hidden hidden border-t border-gray-100 px-6 py-4 space-y-3 text-sm font-medium text-gray-500">
+      <a href="#abstract"    class="block hover:text-slate-900">Abstract</a>
+      <a href="#video"       class="block hover:text-slate-900">Video</a>
+      <a href="#modalities"  class="block hover:text-slate-900">Data</a>
+      <a href="#dataset"     class="block hover:text-slate-900">Dataset</a>
+      <a href="#annotations" class="block hover:text-slate-900">Annotations</a>
+      <a href="#benchmark"   class="block hover:text-slate-900">Benchmark</a>
+      <a href="#authors"     class="block hover:text-slate-900">Authors</a>
+      <a href="#citation"    class="block hover:text-slate-900">Citation</a>
     </div>
   </nav>
 
@@ -133,57 +144,66 @@
   <!-- ============================================================ -->
   <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden grid-bg">
     <div class="absolute inset-0 pointer-events-none">
-      <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-600/10 rounded-full blur-[128px]"></div>
-      <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-primary-400/5 rounded-full blur-[100px]"></div>
+      <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/8 rounded-full blur-[128px]"></div>
+      <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-blue-300/6 rounded-full blur-[100px]"></div>
     </div>
 
     <div class="relative z-10 max-w-4xl mx-auto px-6 text-center">
       <!-- IEEE TRO Badge -->
-      <div class="animate-fade-up inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary-500/20 bg-primary-500/5 text-primary-300 text-sm font-medium mb-8">
-        <span class="w-2 h-2 rounded-full bg-primary-400 animate-pulse"></span>
+      <div class="animate-fade-up inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-blue-200 bg-blue-50 text-blue-600 text-sm font-medium mb-8">
+        <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
         IEEE Transactions on Robotics (T-RO) 2025
       </div>
 
       <!-- Title -->
-      <h1 class="animate-fade-up delay-100 text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">
+      <h1 class="animate-fade-up delay-100 text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6 text-slate-900">
         Toward Deep Representation Learning for Event-enhanced Visual Autonomous Perception:
         <br/>
         <span class="text-gradient">the eAP Dataset</span>
       </h1>
 
       <!-- Authors -->
-      <p class="animate-fade-up delay-200 text-lg text-gray-400 mb-2">
-        <span class="text-gray-200">Jinghang Li</span><sup>*</sup>,
-        <span class="text-gray-200">Shichao Li</span><sup>*</sup>,
-        <span class="text-gray-200">Qing Lian</span>,
-        <span class="text-gray-200">Peiliang Li</span>,
-        <span class="text-gray-200">Xiaozhi Chen</span>,
-        <span class="text-gray-200">Yi Zhou</span><sup>&dagger;</sup>
+      <p class="animate-fade-up delay-200 text-xl text-gray-500 mb-2">
+        <span class="text-slate-900 font-medium">Jinghang Li</span><sup>*</sup>,
+        <span class="text-slate-900 font-medium">Shichao Li</span><sup>*</sup>,
+        <span class="text-slate-900 font-medium">Qing Lian</span>,
+        <span class="text-slate-900 font-medium">Peiliang Li</span>,
+        <span class="text-slate-900 font-medium">Xiaozhi Chen</span>,
+        <span class="text-slate-900 font-medium">Yi Zhou</span><sup>&dagger;</sup>
       </p>
-      <div class="animate-fade-up delay-200 flex items-center justify-center gap-8 mb-4">
-        <img src="assets/logo/hnu.jpg" alt="Hunan University" class="h-10 rounded" />
-        <img src="assets/logo/NAIL.ico" alt="NAIL Lab" class="h-10" />
-        <img src="assets/logo/zyt.svg" alt="Zhuoyu Technology" class="h-10" />
+      <div class="animate-fade-up delay-200 flex flex-wrap items-end justify-center gap-8 mb-4">
+        <div class="flex flex-col items-center gap-2">
+          <img src="assets/logo/hnu.jpg" alt="Hunan University" class="h-14 rounded" />
+          <span class="text-xs text-gray-500 font-medium">Hunan University</span>
+        </div>
+        <div class="flex flex-col items-center gap-2">
+          <img src="assets/logo/NAIL.ico" alt="NAIL Lab" class="h-14" />
+          <span class="text-xs text-gray-500 font-medium">NAIL Lab</span>
+        </div>
+        <div class="flex flex-col items-center gap-2">
+          <img src="assets/logo/zyt.svg" alt="Zhuoyu Technology" class="h-14" />
+          <span class="text-xs text-gray-500 font-medium">Zhuoyu Technology</span>
+        </div>
       </div>
-      <p class="animate-fade-up delay-200 text-xs text-gray-600 mb-10">
+      <p class="animate-fade-up delay-200 text-xs text-gray-400 mb-10">
         <sup>*</sup> Equal contribution &nbsp;&nbsp; <sup>&dagger;</sup> Corresponding author
       </p>
 
       <!-- CTA Buttons -->
       <div class="animate-fade-up delay-300 flex flex-wrap items-center justify-center gap-4">
-        <a href="https://arxiv.org" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary-600 hover:bg-primary-500 text-white font-semibold text-sm transition shadow-lg shadow-primary-600/20">
+        <a href="https://arxiv.org" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm transition shadow-sm shadow-blue-200">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/></svg>
           Paper
         </a>
-        <a href="https://youtu.be/P8x1D-2p8vI" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-white/10 hover:border-white/20 bg-white/5 hover:bg-white/10 text-white font-semibold text-sm transition">
+        <a href="https://youtu.be/P8x1D-2p8vI" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 hover:border-gray-300 font-semibold text-sm transition">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z"/></svg>
           Video
         </a>
-        <a href="https://github.com" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-white/10 hover:border-white/20 bg-white/5 hover:bg-white/10 text-white font-semibold text-sm transition">
+        <a href="https://github.com" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 hover:border-gray-300 font-semibold text-sm transition">
           <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
           GitHub
         </a>
-        <a href="#dataset" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-white/10 hover:border-white/20 bg-white/5 hover:bg-white/10 text-white font-semibold text-sm transition">
+        <a href="#dataset" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 hover:border-gray-300 font-semibold text-sm transition">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V3"/></svg>
           Dataset
         </a>
@@ -192,13 +212,13 @@
       <!-- Teaser figure -->
       <div class="animate-fade-up delay-400 mt-12 max-w-5xl mx-auto">
         <div class="glass rounded-2xl overflow-hidden p-2 glow-ring">
-          <img src="assets/teaser.jpg" alt="eAP dataset teaser: multi-modal autonomous driving data with event camera, RGB, and LiDAR" class="rounded-xl w-full" loading="lazy" />
+          <img src="assets/teaser.jpg" alt="eAP dataset teaser: multi-modal autonomous driving data with event camera, RGB, and LiDAR" class="rounded-xl w-full" fetchpriority="high" />
         </div>
       </div>
 
       <!-- Scroll indicator -->
       <div class="animate-fade-up delay-400 mt-10">
-        <a href="#abstract" class="inline-block text-gray-500 hover:text-gray-300 transition">
+        <a href="#abstract" class="inline-block text-gray-400 hover:text-gray-600 transition">
           <svg class="w-5 h-5 animate-bounce" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
         </a>
       </div>
@@ -208,14 +228,14 @@
   <!-- ============================================================ -->
   <!-- ABSTRACT                                                      -->
   <!-- ============================================================ -->
-  <section id="abstract" class="py-24 border-t border-white/5">
+  <section id="abstract" class="py-24 border-t border-gray-100">
     <div class="max-w-4xl mx-auto px-6">
       <div class="reveal text-center mb-12">
-        <p class="text-primary-400 text-sm font-semibold tracking-widest uppercase mb-3">Abstract</p>
+        <p class="text-blue-600 text-sm font-semibold tracking-widest uppercase mb-3">Abstract</p>
       </div>
       <div class="reveal">
-        <p class="text-gray-300 leading-relaxed text-lg text-justify">
-          Recent visual autonomous perception systems achieve remarkable performances with deep representation learning. However, they fail in scenarios with challenging illumination. While event cameras can mitigate this problem, there is a lack of a large-scale dataset to develop event-enhanced deep visual perception models in autonomous driving scenes. To address the gap, we present the <em>eAP</em> (<strong class="text-white">e</strong>vent-enhanced <strong class="text-white">A</strong>utonomous <strong class="text-white">P</strong>erception) dataset, the largest dataset with event cameras for autonomous perception. We demonstrate how <em>eAP</em> can facilitate the study of different autonomous perception tasks, including 3D vehicle detection and object time-to-contact (TTC) estimation, through deep representation learning. Based on <em>eAP</em>, we demonstrate the first successful use of events to improve a popular 3D vehicle detection network in challenging illumination scenarios. <em>eAP</em> also enables a devoted study of the representation learning problem of object TTC estimation. We show how a geometry-aware representation learning framework leads to the best event-based object TTC estimation network that operates at 200 FPS. The dataset, code, and pre-trained models will be made publicly available for future research.
+        <p class="text-gray-600 leading-relaxed text-lg text-justify">
+          Recent visual autonomous perception systems achieve remarkable performances with deep representation learning. However, they fail in scenarios with challenging illumination. While event cameras can mitigate this problem, there is a lack of a large-scale dataset to develop event-enhanced deep visual perception models in autonomous driving scenes. To address the gap, we present the <em>eAP</em> (<strong class="font-bold text-slate-900">e</strong>vent-enhanced <strong class="font-bold text-slate-900">A</strong>utonomous <strong class="font-bold text-slate-900">P</strong>erception) dataset, the largest dataset with event cameras for autonomous perception. We demonstrate how <em>eAP</em> can facilitate the study of different autonomous perception tasks, including 3D vehicle detection and object time-to-contact (TTC) estimation, through deep representation learning. Based on <em>eAP</em>, we demonstrate the first successful use of events to improve a popular 3D vehicle detection network in challenging illumination scenarios. <em>eAP</em> also enables a devoted study of the representation learning problem of object TTC estimation. We show how a geometry-aware representation learning framework leads to the best event-based object TTC estimation network that operates at 200 FPS. The dataset, code, and pre-trained models will be made publicly available for future research.
         </p>
       </div>
     </div>
@@ -224,32 +244,54 @@
   <!-- ============================================================ -->
   <!-- STATS                                                         -->
   <!-- ============================================================ -->
-  <section id="stats" class="py-16 border-t border-white/5 grid-bg">
+  <section id="stats" class="py-16 border-t border-gray-100 grid-bg">
     <div class="max-w-6xl mx-auto px-6">
+      <div class="reveal text-center mb-10">
+        <p class="text-blue-600 text-sm font-semibold tracking-widest uppercase mb-3">At a Glance</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-slate-900">Dataset Statistics</h2>
+      </div>
       <div class="reveal grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
-        <div class="glass rounded-2xl p-6 text-center">
-          <div class="stat-number text-3xl md:text-4xl font-extrabold text-white mb-1">58</div>
-          <div class="text-sm text-gray-400">Sequences</div>
+        <div class="glass rounded-2xl p-6 text-center hover:border-blue-200 hover:shadow-md transition-all group">
+          <div class="w-10 h-10 rounded-xl bg-blue-50 group-hover:bg-blue-100 flex items-center justify-center mb-3 mx-auto transition">
+            <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 010 3.75H5.625a1.875 1.875 0 010-3.75z"/></svg>
+          </div>
+          <div class="stat-number text-3xl md:text-4xl font-extrabold text-slate-900 mb-1">58</div>
+          <div class="text-sm text-gray-500">Sequences</div>
         </div>
-        <div class="glass rounded-2xl p-6 text-center">
-          <div class="stat-number text-3xl md:text-4xl font-extrabold text-white mb-1">532k+</div>
-          <div class="text-sm text-gray-400">3D Bounding Boxes</div>
+        <div class="glass rounded-2xl p-6 text-center hover:border-blue-200 hover:shadow-md transition-all group">
+          <div class="w-10 h-10 rounded-xl bg-blue-50 group-hover:bg-blue-100 flex items-center justify-center mb-3 mx-auto transition">
+            <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9"/></svg>
+          </div>
+          <div class="stat-number text-3xl md:text-4xl font-extrabold text-slate-900 mb-1">532k+</div>
+          <div class="text-sm text-gray-500">3D Bounding Boxes</div>
         </div>
-        <div class="glass rounded-2xl p-6 text-center">
-          <div class="stat-number text-3xl md:text-4xl font-extrabold text-white mb-1">4.8h</div>
-          <div class="text-sm text-gray-400">Driving Duration</div>
+        <div class="glass rounded-2xl p-6 text-center hover:border-blue-200 hover:shadow-md transition-all group">
+          <div class="w-10 h-10 rounded-xl bg-blue-50 group-hover:bg-blue-100 flex items-center justify-center mb-3 mx-auto transition">
+            <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <div class="stat-number text-3xl md:text-4xl font-extrabold text-slate-900 mb-1">4.8h</div>
+          <div class="text-sm text-gray-500">Driving Duration</div>
         </div>
-        <div class="glass rounded-2xl p-6 text-center">
-          <div class="stat-number text-3xl md:text-4xl font-extrabold text-white mb-1">236km</div>
-          <div class="text-sm text-gray-400">Distance Covered</div>
+        <div class="glass rounded-2xl p-6 text-center hover:border-blue-200 hover:shadow-md transition-all group">
+          <div class="w-10 h-10 rounded-xl bg-blue-50 group-hover:bg-blue-100 flex items-center justify-center mb-3 mx-auto transition">
+            <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z"/></svg>
+          </div>
+          <div class="stat-number text-3xl md:text-4xl font-extrabold text-slate-900 mb-1">236km</div>
+          <div class="text-sm text-gray-500">Distance Covered</div>
         </div>
-        <div class="glass rounded-2xl p-6 text-center">
-          <div class="stat-number text-3xl md:text-4xl font-extrabold text-white mb-1">174k</div>
-          <div class="text-sm text-gray-400">Annotated Frames</div>
+        <div class="glass rounded-2xl p-6 text-center hover:border-blue-200 hover:shadow-md transition-all group">
+          <div class="w-10 h-10 rounded-xl bg-blue-50 group-hover:bg-blue-100 flex items-center justify-center mb-3 mx-auto transition">
+            <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/></svg>
+          </div>
+          <div class="stat-number text-3xl md:text-4xl font-extrabold text-slate-900 mb-1">174k</div>
+          <div class="text-sm text-gray-500">Annotated Frames</div>
         </div>
-        <div class="glass rounded-2xl p-6 text-center">
-          <div class="stat-number text-3xl md:text-4xl font-extrabold text-white mb-1">8</div>
-          <div class="text-sm text-gray-400">Object Classes</div>
+        <div class="glass rounded-2xl p-6 text-center hover:border-blue-200 hover:shadow-md transition-all group">
+          <div class="w-10 h-10 rounded-xl bg-blue-50 group-hover:bg-blue-100 flex items-center justify-center mb-3 mx-auto transition">
+            <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/></svg>
+          </div>
+          <div class="stat-number text-3xl md:text-4xl font-extrabold text-slate-900 mb-1">8</div>
+          <div class="text-sm text-gray-500">Object Classes</div>
         </div>
       </div>
     </div>
@@ -258,11 +300,11 @@
   <!-- ============================================================ -->
   <!-- VIDEO                                                         -->
   <!-- ============================================================ -->
-  <section id="video" class="py-24 border-t border-white/5">
+  <section id="video" class="py-24 border-t border-gray-100">
     <div class="max-w-4xl mx-auto px-6">
       <div class="reveal text-center mb-12">
-        <p class="text-primary-400 text-sm font-semibold tracking-widest uppercase mb-3">Video</p>
-        <h2 class="text-3xl md:text-4xl font-bold text-white">Overview Video</h2>
+        <p class="text-blue-600 text-sm font-semibold tracking-widest uppercase mb-3">Video</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-slate-900">Overview Video</h2>
       </div>
       <div class="reveal">
         <div class="glass rounded-2xl overflow-hidden glow-ring aspect-video">
@@ -278,57 +320,57 @@
   <!-- ============================================================ -->
   <!-- DATA MODALITIES                                               -->
   <!-- ============================================================ -->
-  <section id="modalities" class="py-24 border-t border-white/5 grid-bg">
+  <section id="modalities" class="py-24 border-t border-gray-100 grid-bg">
     <div class="max-w-6xl mx-auto px-6">
       <div class="reveal text-center mb-16">
-        <p class="text-primary-400 text-sm font-semibold tracking-widest uppercase mb-3">Data Modalities</p>
-        <h2 class="text-3xl md:text-4xl font-bold text-white">Multi-sensor Synchronized Capture</h2>
-        <p class="mt-4 text-gray-400 max-w-2xl mx-auto">
+        <p class="text-blue-600 text-sm font-semibold tracking-widest uppercase mb-3">Data Modalities</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-slate-900">Multi-sensor Synchronized Capture</h2>
+        <p class="mt-4 text-gray-500 max-w-2xl mx-auto">
           All sensors are hardware-synchronized at sub-microsecond precision using IEEE PTP and a 10 Hz trigger signal.
         </p>
       </div>
 
       <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
         <!-- RGB Camera -->
-        <div class="reveal glass rounded-2xl p-6 hover:border-primary-500/30 transition-colors group">
-          <div class="w-12 h-12 rounded-xl bg-primary-500/10 flex items-center justify-center mb-4 group-hover:bg-primary-500/20 transition">
-            <svg class="w-6 h-6 text-primary-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z"/><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z"/></svg>
+        <div class="reveal glass rounded-2xl p-6 hover:border-blue-200 hover:shadow-md transition-all group">
+          <div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center mb-4 group-hover:bg-blue-100 transition">
+            <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z"/><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z"/></svg>
           </div>
-          <h3 class="text-lg font-semibold text-white mb-2">RGB Camera</h3>
-          <p class="text-sm text-gray-400 leading-relaxed">
-            FLIR Blackfly S at <strong class="text-gray-300">1920&times;1200</strong>, 10 Hz. Auto-exposure with exposure time priority (1&ndash;20 ms) for minimal motion blur.
+          <h3 class="text-lg font-semibold text-slate-900 mb-2">RGB Camera</h3>
+          <p class="text-sm text-gray-500 leading-relaxed">
+            FLIR Blackfly S at <strong class="text-gray-700">1920&times;1200</strong>, 10 Hz. Auto-exposure with exposure time priority (1&ndash;20 ms) for minimal motion blur.
           </p>
         </div>
 
         <!-- Event Camera -->
-        <div class="reveal glass rounded-2xl p-6 hover:border-primary-500/30 transition-colors group">
-          <div class="w-12 h-12 rounded-xl bg-primary-500/10 flex items-center justify-center mb-4 group-hover:bg-primary-500/20 transition">
-            <svg class="w-6 h-6 text-primary-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg>
+        <div class="reveal glass rounded-2xl p-6 hover:border-blue-200 hover:shadow-md transition-all group">
+          <div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center mb-4 group-hover:bg-blue-100 transition">
+            <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg>
           </div>
-          <h3 class="text-lg font-semibold text-white mb-2">Event Camera</h3>
-          <p class="text-sm text-gray-400 leading-relaxed">
-            Prophesee EVK4 at <strong class="text-gray-300">1280&times;720</strong>. Microsecond temporal resolution with high dynamic range, ideal for challenging illumination.
+          <h3 class="text-lg font-semibold text-slate-900 mb-2">Event Camera</h3>
+          <p class="text-sm text-gray-500 leading-relaxed">
+            Prophesee EVK4 at <strong class="text-gray-700">1280&times;720</strong>. Microsecond temporal resolution with high dynamic range, ideal for challenging illumination.
           </p>
         </div>
 
         <!-- LiDAR -->
-        <div class="reveal glass rounded-2xl p-6 hover:border-primary-500/30 transition-colors group">
-          <div class="w-12 h-12 rounded-xl bg-primary-500/10 flex items-center justify-center mb-4 group-hover:bg-primary-500/20 transition">
-            <svg class="w-6 h-6 text-primary-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 3.75H6A2.25 2.25 0 003.75 6v1.5M16.5 3.75H18A2.25 2.25 0 0120.25 6v1.5m0 9V18A2.25 2.25 0 0118 20.25h-1.5m-9 0H6A2.25 2.25 0 013.75 18v-1.5M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        <div class="reveal glass rounded-2xl p-6 hover:border-blue-200 hover:shadow-md transition-all group">
+          <div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center mb-4 group-hover:bg-blue-100 transition">
+            <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 3.75H6A2.25 2.25 0 003.75 6v1.5M16.5 3.75H18A2.25 2.25 0 0120.25 6v1.5m0 9V18A2.25 2.25 0 0118 20.25h-1.5m-9 0H6A2.25 2.25 0 013.75 18v-1.5M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
           </div>
-          <h3 class="text-lg font-semibold text-white mb-2">LiDAR</h3>
-          <p class="text-sm text-gray-400 leading-relaxed">
-            <strong class="text-gray-300">3&times; Livox TELE-15</strong> (320 m range) + <strong class="text-gray-300">1&times; Livox Mid-360</strong> for dense point clouds used in 3D annotation.
+          <h3 class="text-lg font-semibold text-slate-900 mb-2">LiDAR</h3>
+          <p class="text-sm text-gray-500 leading-relaxed">
+            <strong class="text-gray-700">3&times; Livox TELE-15</strong> (320 m range) + <strong class="text-gray-700">1&times; Livox Mid-360</strong> for dense point clouds used in 3D annotation.
           </p>
         </div>
 
         <!-- GNSS-IMU -->
-        <div class="reveal glass rounded-2xl p-6 hover:border-primary-500/30 transition-colors group">
-          <div class="w-12 h-12 rounded-xl bg-primary-500/10 flex items-center justify-center mb-4 group-hover:bg-primary-500/20 transition">
-            <svg class="w-6 h-6 text-primary-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
+        <div class="reveal glass rounded-2xl p-6 hover:border-blue-200 hover:shadow-md transition-all group">
+          <div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center mb-4 group-hover:bg-blue-100 transition">
+            <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
           </div>
-          <h3 class="text-lg font-semibold text-white mb-2">GNSS-IMU</h3>
-          <p class="text-sm text-gray-400 leading-relaxed">
+          <h3 class="text-lg font-semibold text-slate-900 mb-2">GNSS-IMU</h3>
+          <p class="text-sm text-gray-500 leading-relaxed">
             u-blox ZED-F9K with RTK (0.2 m position accuracy). Ego-pose via tightly-coupled GNSS-Visual-Inertial fusion (GVINS).
           </p>
         </div>
@@ -338,7 +380,7 @@
       <div class="reveal">
         <div class="glass rounded-2xl overflow-hidden p-2 glow-ring max-w-3xl mx-auto">
           <img src="assets/sensor_setup.jpg" alt="Sensor configuration for the eAP dataset showing the vehicle with mounted cameras and LiDAR sensors" class="rounded-xl w-full" loading="lazy" />
-          <p class="text-center text-xs text-gray-500 mt-3 mb-1">Sensor configuration: the event camera and RGB camera are rigidly mounted with a narrow 3 cm baseline.</p>
+          <p class="text-center text-xs text-gray-400 mt-3 mb-1">Sensor configuration: the event camera and RGB camera are rigidly mounted with a narrow 3 cm baseline.</p>
         </div>
       </div>
     </div>
@@ -347,12 +389,12 @@
   <!-- ============================================================ -->
   <!-- DATASET DETAILS                                               -->
   <!-- ============================================================ -->
-  <section id="dataset" class="py-24 border-t border-white/5">
+  <section id="dataset" class="py-24 border-t border-gray-100">
     <div class="max-w-6xl mx-auto px-6">
       <div class="reveal text-center mb-16">
-        <p class="text-primary-400 text-sm font-semibold tracking-widest uppercase mb-3">Dataset Details</p>
-        <h2 class="text-3xl md:text-4xl font-bold text-white">Comprehensive Driving Coverage</h2>
-        <p class="mt-4 text-gray-400 max-w-2xl mx-auto">
+        <p class="text-blue-600 text-sm font-semibold tracking-widest uppercase mb-3">Dataset Details</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-slate-900">Comprehensive Driving Coverage</h2>
+        <p class="mt-4 text-gray-500 max-w-2xl mx-auto">
           Diverse driving scenarios spanning highways, urban roads, and low-light conditions across different times of day and weather.
         </p>
       </div>
@@ -360,7 +402,7 @@
       <div class="reveal glass rounded-2xl overflow-hidden mb-8">
         <table class="w-full text-sm">
           <thead>
-            <tr class="border-b border-white/10 text-left text-gray-400 bg-white/[0.02]">
+            <tr class="border-b border-gray-200 text-left text-gray-500 bg-gray-50">
               <th class="px-6 py-4 font-medium">Region</th>
               <th class="px-6 py-4 font-medium">Distance</th>
               <th class="px-6 py-4 font-medium">Illumination</th>
@@ -368,65 +410,65 @@
               <th class="px-6 py-4 font-medium">Duration (Train/Test)</th>
             </tr>
           </thead>
-          <tbody class="text-gray-300">
-            <tr class="border-b border-white/5">
-              <td class="px-6 py-3 font-medium text-white" rowspan="3">Highways</td>
+          <tbody class="text-gray-600">
+            <tr class="border-b border-gray-100">
+              <td class="px-6 py-3 font-medium text-slate-900" rowspan="3">Highways</td>
               <td class="px-6 py-3" rowspan="3">178.44 km</td>
               <td class="px-6 py-3">Sunny</td>
               <td class="px-6 py-3">13 / 3</td>
               <td class="px-6 py-3">65 / 15 min</td>
             </tr>
-            <tr class="border-b border-white/5">
+            <tr class="border-b border-gray-100">
               <td class="px-6 py-3">Cloudy</td>
               <td class="px-6 py-3">10 / 1</td>
               <td class="px-6 py-3">50 / 5 min</td>
             </tr>
-            <tr class="border-b border-white/5">
+            <tr class="border-b border-gray-100">
               <td class="px-6 py-3">Twilight</td>
               <td class="px-6 py-3">7 / 2</td>
               <td class="px-6 py-3">35 / 10 min</td>
             </tr>
-            <tr class="border-b border-white/5">
-              <td class="px-6 py-3 font-medium text-white" rowspan="4">Urban</td>
+            <tr class="border-b border-gray-100">
+              <td class="px-6 py-3 font-medium text-slate-900" rowspan="4">Urban</td>
               <td class="px-6 py-3" rowspan="4">52.61 km</td>
               <td class="px-6 py-3">Sunny</td>
               <td class="px-6 py-3">5 / 1</td>
               <td class="px-6 py-3">25 / 5 min</td>
             </tr>
-            <tr class="border-b border-white/5">
+            <tr class="border-b border-gray-100">
               <td class="px-6 py-3">Cloudy</td>
               <td class="px-6 py-3">4 / 1</td>
               <td class="px-6 py-3">20 / 5 min</td>
             </tr>
-            <tr class="border-b border-white/5">
+            <tr class="border-b border-gray-100">
               <td class="px-6 py-3">Twilight</td>
               <td class="px-6 py-3">1 / 1</td>
               <td class="px-6 py-3">5 / 5 min</td>
             </tr>
-            <tr class="border-b border-white/5">
+            <tr class="border-b border-gray-100">
               <td class="px-6 py-3">Night</td>
               <td class="px-6 py-3">5 / 2</td>
               <td class="px-6 py-3">25 / 10 min</td>
             </tr>
-            <tr class="border-b border-white/5">
-              <td class="px-6 py-3 font-medium text-white">Low-light</td>
+            <tr class="border-b border-gray-100">
+              <td class="px-6 py-3 font-medium text-slate-900">Low-light</td>
               <td class="px-6 py-3">5.01 km</td>
               <td class="px-6 py-3">Night</td>
               <td class="px-6 py-3">1 / 1</td>
               <td class="px-6 py-3">5 / 5 min</td>
             </tr>
-            <tr class="bg-white/[0.02]">
-              <td class="px-6 py-4 font-bold text-white">Total</td>
-              <td class="px-6 py-4 font-bold text-white">236.06 km</td>
+            <tr class="bg-gray-50">
+              <td class="px-6 py-4 font-bold text-slate-900">Total</td>
+              <td class="px-6 py-4 font-bold text-slate-900">236.06 km</td>
               <td class="px-6 py-4 text-gray-500">&mdash;</td>
-              <td class="px-6 py-4 font-bold text-white">46 / 12</td>
-              <td class="px-6 py-4 font-bold text-white">290 min</td>
+              <td class="px-6 py-4 font-bold text-slate-900">46 / 12</td>
+              <td class="px-6 py-4 font-bold text-slate-900">290 min</td>
             </tr>
           </tbody>
         </table>
       </div>
 
-      <div class="reveal text-center text-sm text-gray-500">
+      <div class="reveal text-center text-sm text-gray-400">
         Train: 46 sequences (138k frames) &middot; Test: 12 sequences (36k frames) &middot; Split at sequence level for fair evaluation.
       </div>
     </div>
@@ -435,12 +477,12 @@
   <!-- ============================================================ -->
   <!-- ANNOTATIONS                                                   -->
   <!-- ============================================================ -->
-  <section id="annotations" class="py-24 border-t border-white/5 grid-bg">
+  <section id="annotations" class="py-24 border-t border-gray-100 grid-bg">
     <div class="max-w-6xl mx-auto px-6">
       <div class="reveal text-center mb-16">
-        <p class="text-primary-400 text-sm font-semibold tracking-widest uppercase mb-3">Annotations</p>
-        <h2 class="text-3xl md:text-4xl font-bold text-white">Rich, Multi-dimensional Labels</h2>
-        <p class="mt-4 text-gray-400 max-w-2xl mx-auto">
+        <p class="text-blue-600 text-sm font-semibold tracking-widest uppercase mb-3">Annotations</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-slate-900">Rich, Multi-dimensional Labels</h2>
+        <p class="mt-4 text-gray-500 max-w-2xl mx-auto">
           Pre-labeled via BEVFusion with 500k in-house frames, tracked by 3D Kalman Filter, then manually verified and corrected by human annotators.
         </p>
       </div>
@@ -449,63 +491,63 @@
         <!-- Left: annotation types list -->
         <div class="space-y-6">
           <div class="flex gap-4">
-            <div class="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center shrink-0 mt-1">
-              <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+            <div class="w-10 h-10 rounded-lg bg-green-50 flex items-center justify-center shrink-0 mt-1">
+              <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
             </div>
             <div>
-              <h4 class="font-semibold text-white">3D Bounding Boxes</h4>
-              <p class="text-sm text-gray-400 mt-1">7-DoF cuboid annotations (x, y, z, l, w, h, yaw) in ego-vehicle coordinate system with front-camera projection.</p>
+              <h4 class="font-semibold text-slate-900">3D Bounding Boxes</h4>
+              <p class="text-sm text-gray-500 mt-1">7-DoF cuboid annotations (x, y, z, l, w, h, yaw) in ego-vehicle coordinate system with front-camera projection.</p>
             </div>
           </div>
           <div class="flex gap-4">
-            <div class="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center shrink-0 mt-1">
-              <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+            <div class="w-10 h-10 rounded-lg bg-green-50 flex items-center justify-center shrink-0 mt-1">
+              <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
             </div>
             <div>
-              <h4 class="font-semibold text-white">Object Tracking</h4>
-              <p class="text-sm text-gray-400 mt-1">Consistent tracking IDs across frames with 11-dimensional state vectors (location, orientation, size, velocity, angular velocity).</p>
+              <h4 class="font-semibold text-slate-900">Object Tracking</h4>
+              <p class="text-sm text-gray-500 mt-1">Consistent tracking IDs across frames with 11-dimensional state vectors (location, orientation, size, velocity, angular velocity).</p>
             </div>
           </div>
           <div class="flex gap-4">
-            <div class="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center shrink-0 mt-1">
-              <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+            <div class="w-10 h-10 rounded-lg bg-green-50 flex items-center justify-center shrink-0 mt-1">
+              <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
             </div>
             <div>
-              <h4 class="font-semibold text-white">Velocity & TTC</h4>
-              <p class="text-sm text-gray-400 mt-1">Per-object ego-relative speed vectors and time-to-collision (TTC) ground truth: &tau; = min(Z) / v<sub>rel</sub>.</p>
+              <h4 class="font-semibold text-slate-900">Velocity &amp; TTC</h4>
+              <p class="text-sm text-gray-500 mt-1">Per-object ego-relative speed vectors and time-to-collision (TTC) ground truth: &tau; = min(Z) / v<sub>rel</sub>.</p>
             </div>
           </div>
           <div class="flex gap-4">
-            <div class="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center shrink-0 mt-1">
-              <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+            <div class="w-10 h-10 rounded-lg bg-green-50 flex items-center justify-center shrink-0 mt-1">
+              <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
             </div>
             <div>
-              <h4 class="font-semibold text-white">Calibration & Synchronization</h4>
-              <p class="text-sm text-gray-400 mt-1">Full intrinsic/extrinsic calibration via Kalibr and Calib-Anything. Sub-microsecond temporal alignment. Narrow-baseline (&lt;5 px disparity) RGB-event mapping.</p>
+              <h4 class="font-semibold text-slate-900">Calibration &amp; Synchronization</h4>
+              <p class="text-sm text-gray-500 mt-1">Full intrinsic/extrinsic calibration via Kalibr and Calib-Anything. Sub-microsecond temporal alignment. Narrow-baseline (&lt;5 px disparity) RGB-event mapping.</p>
             </div>
           </div>
         </div>
 
         <!-- Right: class table -->
         <div class="glass rounded-2xl p-6">
-          <h4 class="font-semibold text-white mb-4">Supported Object Classes</h4>
+          <h4 class="font-semibold text-slate-900 mb-4">Supported Object Classes</h4>
           <div class="grid grid-cols-2 gap-3 text-sm">
-            <div class="flex items-center gap-2 text-gray-300"><span class="w-2 h-2 rounded-full bg-blue-400"></span>Car</div>
-            <div class="flex items-center gap-2 text-gray-300"><span class="w-2 h-2 rounded-full bg-blue-400"></span>Bus</div>
-            <div class="flex items-center gap-2 text-gray-300"><span class="w-2 h-2 rounded-full bg-blue-400"></span>Truck</div>
-            <div class="flex items-center gap-2 text-gray-300"><span class="w-2 h-2 rounded-full bg-blue-400"></span>SUV</div>
-            <div class="flex items-center gap-2 text-gray-300"><span class="w-2 h-2 rounded-full bg-green-400"></span>Pedestrian</div>
-            <div class="flex items-center gap-2 text-gray-300"><span class="w-2 h-2 rounded-full bg-yellow-400"></span>Motorcycle</div>
-            <div class="flex items-center gap-2 text-gray-300"><span class="w-2 h-2 rounded-full bg-yellow-400"></span>Bicycle</div>
-            <div class="flex items-center gap-2 text-gray-300"><span class="w-2 h-2 rounded-full bg-orange-400"></span>Tricycle</div>
+            <div class="flex items-center gap-2 text-gray-600"><span class="w-2 h-2 rounded-full bg-blue-400"></span>Car</div>
+            <div class="flex items-center gap-2 text-gray-600"><span class="w-2 h-2 rounded-full bg-blue-400"></span>Bus</div>
+            <div class="flex items-center gap-2 text-gray-600"><span class="w-2 h-2 rounded-full bg-blue-400"></span>Truck</div>
+            <div class="flex items-center gap-2 text-gray-600"><span class="w-2 h-2 rounded-full bg-blue-400"></span>SUV</div>
+            <div class="flex items-center gap-2 text-gray-600"><span class="w-2 h-2 rounded-full bg-green-500"></span>Pedestrian</div>
+            <div class="flex items-center gap-2 text-gray-600"><span class="w-2 h-2 rounded-full bg-yellow-500"></span>Motorcycle</div>
+            <div class="flex items-center gap-2 text-gray-600"><span class="w-2 h-2 rounded-full bg-yellow-500"></span>Bicycle</div>
+            <div class="flex items-center gap-2 text-gray-600"><span class="w-2 h-2 rounded-full bg-orange-500"></span>Tricycle</div>
           </div>
 
-          <h4 class="font-semibold text-white mt-6 mb-3">Future Annotation Extensions</h4>
-          <div class="grid grid-cols-2 gap-2 text-sm text-gray-500">
-            <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-gray-600"></span>Dense TTC maps</div>
-            <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-gray-600"></span>Optical flow</div>
-            <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-gray-600"></span>Depth maps</div>
-            <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-gray-600"></span>Segmentation masks</div>
+          <h4 class="font-semibold text-slate-900 mt-6 mb-3">Future Annotation Extensions</h4>
+          <div class="grid grid-cols-2 gap-2 text-sm text-gray-400">
+            <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-gray-300"></span>Dense TTC maps</div>
+            <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-gray-300"></span>Optical flow</div>
+            <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-gray-300"></span>Depth maps</div>
+            <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-gray-300"></span>Segmentation masks</div>
           </div>
         </div>
       </div>
@@ -514,17 +556,17 @@
       <div class="reveal mb-6">
         <div class="glass rounded-2xl overflow-hidden p-2">
           <img src="assets/cuboid_anno.jpg" alt="3D cuboid annotation examples on RGB and event camera views across different driving scenarios" class="rounded-xl w-full" loading="lazy" />
-          <p class="text-center text-xs text-gray-500 mt-3 mb-1">3D cuboid annotations projected on RGB and event views across diverse driving scenarios and illumination conditions.</p>
+          <p class="text-center text-xs text-gray-400 mt-3 mb-1">3D cuboid annotations projected on RGB and event views across diverse driving scenarios and illumination conditions.</p>
         </div>
       </div>
       <div class="reveal grid md:grid-cols-2 gap-6">
         <div class="glass rounded-2xl overflow-hidden p-2">
           <img src="assets/lidar_anno.jpg" alt="BEV visualization of LiDAR point cloud with annotated 3D bounding boxes and velocity curves" class="rounded-xl w-full" loading="lazy" />
-          <p class="text-center text-xs text-gray-500 mt-3 mb-1">BEV of LiDAR point cloud with 3D boxes and velocity curves of object trajectories.</p>
+          <p class="text-center text-xs text-gray-400 mt-3 mb-1">BEV of LiDAR point cloud with 3D boxes and velocity curves of object trajectories.</p>
         </div>
         <div class="glass rounded-2xl overflow-hidden p-2">
           <img src="assets/refined_proj_seg.png" alt="Projected point cloud on RGB image showing LiDAR-camera calibration quality" class="rounded-xl w-full" loading="lazy" />
-          <p class="text-center text-xs text-gray-500 mt-3 mb-1">Projected LiDAR point cloud on RGB image demonstrating calibration quality.</p>
+          <p class="text-center text-xs text-gray-400 mt-3 mb-1">Projected LiDAR point cloud on RGB image demonstrating calibration quality.</p>
         </div>
       </div>
     </div>
@@ -533,12 +575,12 @@
   <!-- ============================================================ -->
   <!-- BENCHMARK                                                     -->
   <!-- ============================================================ -->
-  <section id="benchmark" class="py-24 border-t border-white/5">
+  <section id="benchmark" class="py-24 border-t border-gray-100">
     <div class="max-w-6xl mx-auto px-6">
       <div class="reveal text-center mb-12">
-        <p class="text-primary-400 text-sm font-semibold tracking-widest uppercase mb-3">Benchmark</p>
-        <h2 class="text-3xl md:text-4xl font-bold text-white">Benchmark Results</h2>
-        <p class="mt-4 text-gray-400 max-w-2xl mx-auto">
+        <p class="text-blue-600 text-sm font-semibold tracking-widest uppercase mb-3">Benchmark</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-slate-900">Benchmark Results</h2>
+        <p class="mt-4 text-gray-500 max-w-2xl mx-auto">
           We evaluate on two tasks: object TTC estimation and 3D vehicle detection. Our Garl-TTC achieves state-of-the-art performance at 200 FPS.
         </p>
       </div>
@@ -546,22 +588,22 @@
       <!-- Model architecture and TTC diagram -->
       <div class="reveal grid md:grid-cols-2 gap-6 mb-12">
         <div class="glass rounded-2xl overflow-hidden p-2">
-          <img src="assets/model architecture.jpg" alt="Garl-TTC model architecture with dual-encoder for RGB and event inputs" class="rounded-xl w-full" loading="lazy" />
-          <p class="text-center text-xs text-gray-500 mt-3 mb-1">Garl-TTC architecture: geometry-aware representation learning with dual RGB/event encoders.</p>
+          <img src="assets/model_architecture.jpg" alt="Garl-TTC model architecture with dual-encoder for RGB and event inputs" class="rounded-xl w-full" loading="lazy" />
+          <p class="text-center text-xs text-gray-400 mt-3 mb-1">Garl-TTC architecture: geometry-aware representation learning with dual RGB/event encoders.</p>
         </div>
         <div class="glass rounded-2xl overflow-hidden p-2">
           <img src="assets/ttc_diagram.jpg" alt="TTC estimation diagram showing geometric prior" class="rounded-xl w-full" loading="lazy" />
-          <p class="text-center text-xs text-gray-500 mt-3 mb-1">Geometric prior: TTC is derived from object height ratio changes across consecutive frames.</p>
+          <p class="text-center text-xs text-gray-400 mt-3 mb-1">Geometric prior: TTC is derived from object height ratio changes across consecutive frames.</p>
         </div>
       </div>
 
       <!-- TTC Estimation: eAP benchmark -->
       <div class="reveal mb-12">
-        <h3 class="text-xl font-semibold text-white mb-4">TTC Estimation on eAP (Motion-in-Depth Error &darr;)</h3>
+        <h3 class="text-xl font-semibold text-slate-900 mb-4">TTC Estimation on eAP (Motion-in-Depth Error &darr;)</h3>
         <div class="glass rounded-2xl overflow-x-auto">
           <table class="w-full text-sm">
             <thead>
-              <tr class="border-b border-white/10 text-left text-gray-400 bg-white/[0.02]">
+              <tr class="bg-gray-50 border-b border-gray-200 text-left text-gray-500">
                 <th class="px-5 py-3 font-medium">Method</th>
                 <th class="px-5 py-3 font-medium">Type</th>
                 <th class="px-5 py-3 font-medium">Modality</th>
@@ -571,8 +613,8 @@
                 <th class="px-5 py-3 font-medium text-right">MiD<sub>n</sub> (&lt;0s)</th>
               </tr>
             </thead>
-            <tbody class="text-gray-300">
-              <tr class="border-b border-white/5">
+            <tbody class="text-gray-600">
+              <tr class="border-b border-gray-100">
                 <td class="px-5 py-3">FAITH</td>
                 <td class="px-5 py-3 text-gray-500">Model</td>
                 <td class="px-5 py-3 text-gray-500">E</td>
@@ -581,25 +623,25 @@
                 <td class="px-5 py-3 text-right">319.0</td>
                 <td class="px-5 py-3 text-right">376.4</td>
               </tr>
-              <tr class="border-b border-white/5">
+              <tr class="border-b border-gray-100">
                 <td class="px-5 py-3">ETTCM<sub>scaling</sub></td>
                 <td class="px-5 py-3 text-gray-500">Model</td>
                 <td class="px-5 py-3 text-gray-500">E</td>
                 <td class="px-5 py-3 text-right">402.2</td>
-                <td class="px-5 py-3 text-right text-primary-300">279.5</td>
-                <td class="px-5 py-3 text-right text-primary-300">263.9</td>
-                <td class="px-5 py-3 text-right text-primary-300">207.5</td>
+                <td class="px-5 py-3 text-right text-blue-500">279.5</td>
+                <td class="px-5 py-3 text-right text-blue-500">263.9</td>
+                <td class="px-5 py-3 text-right text-blue-500">207.5</td>
               </tr>
-              <tr class="border-b border-white/5">
+              <tr class="border-b border-gray-100">
                 <td class="px-5 py-3">ETTCM<sub>6-dof</sub></td>
                 <td class="px-5 py-3 text-gray-500">Model</td>
                 <td class="px-5 py-3 text-gray-500">E</td>
-                <td class="px-5 py-3 text-right text-primary-300">226.1</td>
+                <td class="px-5 py-3 text-right text-blue-500">226.1</td>
                 <td class="px-5 py-3 text-right">326.2</td>
                 <td class="px-5 py-3 text-right">321.6</td>
                 <td class="px-5 py-3 text-right">223.8</td>
               </tr>
-              <tr class="border-b border-white/5">
+              <tr class="border-b border-gray-100">
                 <td class="px-5 py-3">CMax</td>
                 <td class="px-5 py-3 text-gray-500">Model</td>
                 <td class="px-5 py-3 text-gray-500">E</td>
@@ -608,7 +650,7 @@
                 <td class="px-5 py-3 text-right">1528.0</td>
                 <td class="px-5 py-3 text-right">1187.0</td>
               </tr>
-              <tr class="border-b border-white/5">
+              <tr class="border-b border-gray-100">
                 <td class="px-5 py-3">STRTTC</td>
                 <td class="px-5 py-3 text-gray-500">Model</td>
                 <td class="px-5 py-3 text-gray-500">E</td>
@@ -617,28 +659,28 @@
                 <td class="px-5 py-3 text-right">954.3</td>
                 <td class="px-5 py-3 text-right">348.9</td>
               </tr>
-              <tr class="bg-primary-500/5 border-b border-primary-500/10">
-                <td class="px-5 py-3 font-semibold text-white">Garl-TTC (Ours)</td>
-                <td class="px-5 py-3 text-primary-300">Learning</td>
-                <td class="px-5 py-3 text-primary-300">E+V</td>
-                <td class="px-5 py-3 text-right font-bold text-white">53.1</td>
-                <td class="px-5 py-3 text-right font-bold text-white">37.6</td>
-                <td class="px-5 py-3 text-right font-bold text-white">40.6</td>
-                <td class="px-5 py-3 text-right font-bold text-white">31.3</td>
+              <tr class="bg-blue-50 border-b border-blue-100">
+                <td class="px-5 py-3 font-semibold text-slate-900">Garl-TTC (Ours)</td>
+                <td class="px-5 py-3 text-slate-900">Learning</td>
+                <td class="px-5 py-3 text-slate-900">E+V</td>
+                <td class="px-5 py-3 text-right font-bold text-slate-900">53.1</td>
+                <td class="px-5 py-3 text-right font-bold text-slate-900">37.6</td>
+                <td class="px-5 py-3 text-right font-bold text-slate-900">40.6</td>
+                <td class="px-5 py-3 text-right font-bold text-slate-900">31.3</td>
               </tr>
             </tbody>
           </table>
         </div>
-        <p class="text-xs text-gray-500 mt-2">MiD = Motion-in-Depth error (lower is better). TTC ranges: critical (0&ndash;3s), small (3&ndash;6s), large (6&ndash;10s), negative (&lt;0s).</p>
+        <p class="text-xs text-gray-400 mt-2">MiD = Motion-in-Depth error (lower is better). TTC ranges: critical (0&ndash;3s), small (3&ndash;6s), large (6&ndash;10s), negative (&lt;0s).</p>
       </div>
 
       <!-- Cross-dataset TTC comparison -->
       <div class="reveal mb-12">
-        <h3 class="text-xl font-semibold text-white mb-4">Cross-dataset TTC Evaluation (FCWD Benchmark + eAP)</h3>
+        <h3 class="text-xl font-semibold text-slate-900 mb-4">Cross-dataset TTC Evaluation (FCWD Benchmark + eAP)</h3>
         <div class="glass rounded-2xl overflow-x-auto">
           <table class="w-full text-sm">
             <thead>
-              <tr class="border-b border-white/10 text-left text-gray-400 bg-white/[0.02]">
+              <tr class="bg-gray-50 border-b border-gray-200 text-left text-gray-500">
                 <th class="px-5 py-3 font-medium">Method</th>
                 <th class="px-5 py-3 font-medium text-right">FCWD1 RTE&darr;</th>
                 <th class="px-5 py-3 font-medium text-right">FCWD2 RTE&darr;</th>
@@ -646,48 +688,48 @@
                 <th class="px-5 py-3 font-medium text-right">eAP MiD&darr;</th>
               </tr>
             </thead>
-            <tbody class="text-gray-300">
-              <tr class="border-b border-white/5">
+            <tbody class="text-gray-600">
+              <tr class="border-b border-gray-100">
                 <td class="px-5 py-3">ETTCM<sub>6-dof</sub> (Event)</td>
                 <td class="px-5 py-3 text-right">15.5</td>
                 <td class="px-5 py-3 text-right">18.4</td>
                 <td class="px-5 py-3 text-right">19.0</td>
                 <td class="px-5 py-3 text-right">265.4</td>
               </tr>
-              <tr class="border-b border-white/5">
+              <tr class="border-b border-gray-100">
                 <td class="px-5 py-3">STRTTC (Event)</td>
                 <td class="px-5 py-3 text-right">9.8</td>
                 <td class="px-5 py-3 text-right">11.5</td>
                 <td class="px-5 py-3 text-right">14.0</td>
                 <td class="px-5 py-3 text-right">408.7</td>
               </tr>
-              <tr class="border-b border-white/5">
+              <tr class="border-b border-gray-100">
                 <td class="px-5 py-3">DeepScale (Frame)</td>
                 <td class="px-5 py-3 text-right">25.4</td>
                 <td class="px-5 py-3 text-right">19.6</td>
                 <td class="px-5 py-3 text-right">21.7</td>
                 <td class="px-5 py-3 text-right">81.9</td>
               </tr>
-              <tr class="bg-primary-500/5 border-b border-primary-500/10">
-                <td class="px-5 py-3 font-semibold text-white">Garl-TTC (Ours)</td>
-                <td class="px-5 py-3 text-right font-bold text-white">5.2</td>
-                <td class="px-5 py-3 text-right font-bold text-white">6.1</td>
-                <td class="px-5 py-3 text-right font-bold text-white">5.4</td>
-                <td class="px-5 py-3 text-right font-bold text-white">45.0</td>
+              <tr class="bg-blue-50 border-b border-blue-100">
+                <td class="px-5 py-3 font-semibold text-slate-900">Garl-TTC (Ours)</td>
+                <td class="px-5 py-3 text-right font-bold text-slate-900">5.2</td>
+                <td class="px-5 py-3 text-right font-bold text-slate-900">6.1</td>
+                <td class="px-5 py-3 text-right font-bold text-slate-900">5.4</td>
+                <td class="px-5 py-3 text-right font-bold text-slate-900">45.0</td>
               </tr>
             </tbody>
           </table>
         </div>
-        <p class="text-xs text-gray-500 mt-2">RTE = Relative TTC Error (%, lower is better). FCWD results without fine-tuning demonstrate strong generalization.</p>
+        <p class="text-xs text-gray-400 mt-2">RTE = Relative TTC Error (%, lower is better). FCWD results without fine-tuning demonstrate strong generalization.</p>
       </div>
 
       <!-- 3D Detection -->
       <div class="reveal mb-12">
-        <h3 class="text-xl font-semibold text-white mb-4">3D Vehicle Detection on eAP</h3>
+        <h3 class="text-xl font-semibold text-slate-900 mb-4">3D Vehicle Detection on eAP</h3>
         <div class="glass rounded-2xl overflow-x-auto">
           <table class="w-full text-sm">
             <thead>
-              <tr class="border-b border-white/10 text-left text-gray-400 bg-white/[0.02]">
+              <tr class="bg-gray-50 border-b border-gray-200 text-left text-gray-500">
                 <th class="px-5 py-3 font-medium">Method</th>
                 <th class="px-5 py-3 font-medium">Modality</th>
                 <th class="px-5 py-3 font-medium">Frames</th>
@@ -695,63 +737,63 @@
                 <th class="px-5 py-3 font-medium text-right" colspan="2">HDR AP&uarr; / ATE&darr;</th>
               </tr>
             </thead>
-            <tbody class="text-gray-300">
-              <tr class="border-b border-white/5">
+            <tbody class="text-gray-600">
+              <tr class="border-b border-gray-100">
                 <td class="px-5 py-3">Visual-only</td>
                 <td class="px-5 py-3 text-gray-500">V</td>
                 <td class="px-5 py-3 text-gray-500">1</td>
                 <td class="px-5 py-3 text-right" colspan="2">0.510 / 0.497</td>
                 <td class="px-5 py-3 text-right" colspan="2">0.403 / 0.584</td>
               </tr>
-              <tr class="border-b border-white/5">
+              <tr class="border-b border-gray-100">
                 <td class="px-5 py-3">Event-only</td>
                 <td class="px-5 py-3 text-gray-500">E</td>
                 <td class="px-5 py-3 text-gray-500">1</td>
                 <td class="px-5 py-3 text-right" colspan="2">0.200 / 0.794</td>
                 <td class="px-5 py-3 text-right" colspan="2">0.138 / 0.872</td>
               </tr>
-              <tr class="border-b border-white/5">
+              <tr class="border-b border-gray-100">
                 <td class="px-5 py-3">Fusion</td>
                 <td class="px-5 py-3 text-gray-500">V+E</td>
                 <td class="px-5 py-3 text-gray-500">1</td>
                 <td class="px-5 py-3 text-right" colspan="2">0.515 / 0.482</td>
                 <td class="px-5 py-3 text-right" colspan="2">0.460 / 0.503</td>
               </tr>
-              <tr class="bg-primary-500/5 border-b border-primary-500/10">
-                <td class="px-5 py-3 font-semibold text-white">Fusion-temporal</td>
-                <td class="px-5 py-3 text-primary-300">V+E</td>
-                <td class="px-5 py-3 text-primary-300">3</td>
-                <td class="px-5 py-3 text-right font-bold text-white" colspan="2">0.531 / 0.400</td>
-                <td class="px-5 py-3 text-right font-bold text-white" colspan="2">0.558 / 0.363</td>
+              <tr class="bg-blue-50 border-b border-blue-100">
+                <td class="px-5 py-3 font-semibold text-slate-900">Fusion-temporal</td>
+                <td class="px-5 py-3 text-slate-900">V+E</td>
+                <td class="px-5 py-3 text-slate-900">3</td>
+                <td class="px-5 py-3 text-right font-bold text-slate-900" colspan="2">0.531 / 0.400</td>
+                <td class="px-5 py-3 text-right font-bold text-slate-900" colspan="2">0.558 / 0.363</td>
               </tr>
             </tbody>
           </table>
         </div>
-        <p class="text-xs text-gray-500 mt-2">AP = Average Precision (higher is better), ATE = Average Translation Error (lower is better). Event fusion notably improves HDR scene performance (+38.5% AP over visual-only).</p>
+        <p class="text-xs text-gray-400 mt-2">AP = Average Precision (higher is better), ATE = Average Translation Error (lower is better). Event fusion notably improves HDR scene performance (+38.5% AP over visual-only).</p>
       </div>
 
       <!-- Runtime -->
       <div class="reveal">
-        <h3 class="text-xl font-semibold text-white mb-4">Runtime Performance</h3>
+        <h3 class="text-xl font-semibold text-slate-900 mb-4">Runtime Performance</h3>
         <div class="grid md:grid-cols-2 gap-6">
           <div class="glass rounded-2xl p-6">
-            <h4 class="font-semibold text-white mb-3">Garl-TTC</h4>
-            <div class="space-y-2 text-sm text-gray-300">
-              <div class="flex justify-between"><span>RGB Encoder</span><span class="font-mono text-gray-400">7.11 ms</span></div>
-              <div class="flex justify-between"><span>Event Encoder</span><span class="font-mono text-gray-400">7.08 ms</span></div>
-              <div class="flex justify-between"><span>Height Head</span><span class="font-mono text-gray-400">0.15 ms</span></div>
-              <div class="flex justify-between border-t border-white/10 pt-2"><span class="font-semibold text-white">Total (A100)</span><span class="font-mono text-white">21.05 ms</span></div>
-              <div class="flex justify-between"><span class="text-primary-300">Orin NX16G (ONNX)</span><span class="font-mono text-primary-300">4.55 ms (~200 FPS)</span></div>
+            <h4 class="font-semibold text-slate-900 mb-3">Garl-TTC</h4>
+            <div class="space-y-2 text-sm text-gray-600">
+              <div class="flex justify-between"><span>RGB Encoder</span><span class="font-mono text-gray-500">7.11 ms</span></div>
+              <div class="flex justify-between"><span>Event Encoder</span><span class="font-mono text-gray-500">7.08 ms</span></div>
+              <div class="flex justify-between"><span>Height Head</span><span class="font-mono text-gray-500">0.15 ms</span></div>
+              <div class="flex justify-between border-t border-gray-200 pt-2"><span class="font-semibold text-slate-900">Total (A100)</span><span class="font-mono text-slate-900">21.05 ms</span></div>
+              <div class="flex justify-between"><span class="text-blue-600">Orin NX16G (ONNX)</span><span class="font-mono text-blue-600">4.55 ms (~200 FPS)</span></div>
             </div>
           </div>
           <div class="glass rounded-2xl p-6">
-            <h4 class="font-semibold text-white mb-3">3D Detection</h4>
-            <div class="space-y-2 text-sm text-gray-300">
-              <div class="flex justify-between"><span>RGB Encoder</span><span class="font-mono text-gray-400">27.48 ms</span></div>
-              <div class="flex justify-between"><span>Event Encoder</span><span class="font-mono text-gray-400">23.35 ms</span></div>
-              <div class="flex justify-between"><span>BEV Encoder</span><span class="font-mono text-gray-400">34.26 ms</span></div>
-              <div class="flex justify-between"><span>Other modules</span><span class="font-mono text-gray-400">10.42 ms</span></div>
-              <div class="flex justify-between border-t border-white/10 pt-2"><span class="font-semibold text-white">Total (A100)</span><span class="font-mono text-white">125.07 ms</span></div>
+            <h4 class="font-semibold text-slate-900 mb-3">3D Detection</h4>
+            <div class="space-y-2 text-sm text-gray-600">
+              <div class="flex justify-between"><span>RGB Encoder</span><span class="font-mono text-gray-500">27.48 ms</span></div>
+              <div class="flex justify-between"><span>Event Encoder</span><span class="font-mono text-gray-500">23.35 ms</span></div>
+              <div class="flex justify-between"><span>BEV Encoder</span><span class="font-mono text-gray-500">34.26 ms</span></div>
+              <div class="flex justify-between"><span>Other modules</span><span class="font-mono text-gray-500">10.42 ms</span></div>
+              <div class="flex justify-between border-t border-gray-200 pt-2"><span class="font-semibold text-slate-900">Total (A100)</span><span class="font-mono text-slate-900">125.07 ms</span></div>
             </div>
           </div>
         </div>
@@ -759,15 +801,15 @@
 
       <!-- Qualitative results -->
       <div class="reveal mt-12">
-        <h3 class="text-xl font-semibold text-white mb-4">Qualitative Results</h3>
+        <h3 class="text-xl font-semibold text-slate-900 mb-4">Qualitative Results</h3>
         <div class="space-y-6">
           <div class="glass rounded-2xl overflow-hidden p-2">
             <img src="assets/ttc_result.jpg" alt="TTC estimation qualitative results comparing Garl-TTC with baselines" class="rounded-xl w-full" loading="lazy" />
-            <p class="text-center text-xs text-gray-500 mt-3 mb-1">TTC estimation results: Garl-TTC produces accurate and temporally smooth TTC predictions across diverse scenarios.</p>
+            <p class="text-center text-xs text-gray-400 mt-3 mb-1">TTC estimation results: Garl-TTC produces accurate and temporally smooth TTC predictions across diverse scenarios.</p>
           </div>
           <div class="glass rounded-2xl overflow-hidden p-2">
             <img src="assets/bev_result.jpg" alt="3D vehicle detection BEV results comparing visual-only, event-only, and fusion approaches" class="rounded-xl w-full" loading="lazy" />
-            <p class="text-center text-xs text-gray-500 mt-3 mb-1">3D detection BEV results: event-enhanced fusion improves detection in challenging illumination (HDR) scenarios.</p>
+            <p class="text-center text-xs text-gray-400 mt-3 mb-1">3D detection BEV results: event-enhanced fusion improves detection in challenging illumination (HDR) scenarios.</p>
           </div>
         </div>
       </div>
@@ -777,67 +819,67 @@
   <!-- ============================================================ -->
   <!-- AUTHORS                                                       -->
   <!-- ============================================================ -->
-  <section id="authors" class="py-24 border-t border-white/5 grid-bg">
+  <section id="authors" class="py-24 border-t border-gray-100 grid-bg">
     <div class="max-w-6xl mx-auto px-6">
       <div class="reveal text-center mb-16">
-        <p class="text-primary-400 text-sm font-semibold tracking-widest uppercase mb-3">Team</p>
-        <h2 class="text-3xl md:text-4xl font-bold text-white">Authors</h2>
+        <p class="text-blue-600 text-sm font-semibold tracking-widest uppercase mb-3">Team</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-slate-900">Authors</h2>
       </div>
 
       <div class="reveal grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
         <!-- Jinghang Li -->
-        <div class="glass rounded-2xl p-4 text-center hover:border-primary-500/20 transition-colors">
+        <div class="glass rounded-2xl p-4 text-center hover:border-blue-200 hover:shadow-md transition-all">
           <div class="w-full aspect-[3/4] mx-auto mb-3 rounded-xl overflow-hidden">
             <img src="assets/authors/lijinghang.jpg" alt="Jinghang Li" class="w-full h-full object-cover object-top" loading="lazy" />
           </div>
-          <h4 class="text-sm font-semibold text-white">Jinghang Li<sup>*</sup></h4>
+          <h4 class="text-sm font-semibold text-slate-900">Jinghang Li<sup>*</sup></h4>
           <p class="text-xs text-gray-500 mt-1">Ph.D. Student</p>
-          <p class="text-xs text-gray-600">Hunan University</p>
+          <p class="text-xs text-gray-400">Hunan University</p>
         </div>
         <!-- Shichao Li -->
-        <div class="glass rounded-2xl p-4 text-center hover:border-primary-500/20 transition-colors">
+        <div class="glass rounded-2xl p-4 text-center hover:border-blue-200 hover:shadow-md transition-all">
           <div class="w-full aspect-[3/4] mx-auto mb-3 rounded-xl overflow-hidden">
             <img src="assets/authors/lishichao.jpg" alt="Shichao Li" class="w-full h-full object-cover object-top" loading="lazy" />
           </div>
-          <h4 class="text-sm font-semibold text-white">Shichao Li<sup>*</sup></h4>
+          <h4 class="text-sm font-semibold text-slate-900">Shichao Li<sup>*</sup></h4>
           <p class="text-xs text-gray-500 mt-1">Senior Research Engineer</p>
-          <p class="text-xs text-gray-600">ByteDance</p>
+          <p class="text-xs text-gray-400">ByteDance</p>
         </div>
         <!-- Qing Lian -->
-        <div class="glass rounded-2xl p-4 text-center hover:border-primary-500/20 transition-colors">
+        <div class="glass rounded-2xl p-4 text-center hover:border-blue-200 hover:shadow-md transition-all">
           <div class="w-full aspect-[3/4] mx-auto mb-3 rounded-xl overflow-hidden">
             <img src="assets/authors/lianqing.jpg" alt="Qing Lian" class="w-full h-full object-cover object-top" loading="lazy" />
           </div>
-          <h4 class="text-sm font-semibold text-white">Qing Lian</h4>
+          <h4 class="text-sm font-semibold text-slate-900">Qing Lian</h4>
           <p class="text-xs text-gray-500 mt-1">Researcher</p>
-          <p class="text-xs text-gray-600">Zhuoyu Technology</p>
+          <p class="text-xs text-gray-400">Zhuoyu Technology</p>
         </div>
         <!-- Peiliang Li -->
-        <div class="glass rounded-2xl p-4 text-center hover:border-primary-500/20 transition-colors">
+        <div class="glass rounded-2xl p-4 text-center hover:border-blue-200 hover:shadow-md transition-all">
           <div class="w-full aspect-[3/4] mx-auto mb-3 rounded-xl overflow-hidden">
             <img src="assets/authors/lipeiliang.jpg" alt="Peiliang Li" class="w-full h-full object-cover object-top" loading="lazy" />
           </div>
-          <h4 class="text-sm font-semibold text-white">Peiliang Li</h4>
+          <h4 class="text-sm font-semibold text-slate-900">Peiliang Li</h4>
           <p class="text-xs text-gray-500 mt-1">Algorithm Lead</p>
-          <p class="text-xs text-gray-600">Zhuoyu Technology</p>
+          <p class="text-xs text-gray-400">Zhuoyu Technology</p>
         </div>
         <!-- Xiaozhi Chen -->
-        <div class="glass rounded-2xl p-4 text-center hover:border-primary-500/20 transition-colors">
+        <div class="glass rounded-2xl p-4 text-center hover:border-blue-200 hover:shadow-md transition-all">
           <div class="w-full aspect-[3/4] mx-auto mb-3 rounded-xl overflow-hidden">
             <img src="assets/authors/chenxiaozhi.jpeg" alt="Xiaozhi Chen" class="w-full h-full object-cover object-top" loading="lazy" />
           </div>
-          <h4 class="text-sm font-semibold text-white">Xiaozhi Chen</h4>
+          <h4 class="text-sm font-semibold text-slate-900">Xiaozhi Chen</h4>
           <p class="text-xs text-gray-500 mt-1">Director of AI Research</p>
-          <p class="text-xs text-gray-600">Zhuoyu Technology</p>
+          <p class="text-xs text-gray-400">Zhuoyu Technology</p>
         </div>
         <!-- Yi Zhou -->
-        <div class="glass rounded-2xl p-4 text-center hover:border-primary-500/20 transition-colors">
+        <div class="glass rounded-2xl p-4 text-center hover:border-blue-200 hover:shadow-md transition-all">
           <div class="w-full aspect-[3/4] mx-auto mb-3 rounded-xl overflow-hidden">
             <img src="assets/authors/zhouyi.png" alt="Yi Zhou" class="w-full h-full object-cover object-top" loading="lazy" />
           </div>
-          <h4 class="text-sm font-semibold text-white">Yi Zhou<sup>&dagger;</sup></h4>
+          <h4 class="text-sm font-semibold text-slate-900">Yi Zhou<sup>&dagger;</sup></h4>
           <p class="text-xs text-gray-500 mt-1">Professor</p>
-          <p class="text-xs text-gray-600">Hunan University</p>
+          <p class="text-xs text-gray-400">Hunan University</p>
         </div>
       </div>
     </div>
@@ -846,18 +888,18 @@
   <!-- ============================================================ -->
   <!-- CITATION                                                      -->
   <!-- ============================================================ -->
-  <section id="citation" class="py-24 border-t border-white/5">
+  <section id="citation" class="py-24 border-t border-gray-100">
     <div class="max-w-3xl mx-auto px-6">
       <div class="reveal text-center mb-8">
-        <p class="text-primary-400 text-sm font-semibold tracking-widest uppercase mb-3">Citation</p>
-        <h2 class="text-3xl md:text-4xl font-bold text-white">Cite Our Work</h2>
+        <p class="text-blue-600 text-sm font-semibold tracking-widest uppercase mb-3">Citation</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-slate-900">Cite Our Work</h2>
       </div>
 
       <div class="reveal glass rounded-2xl p-6 relative group">
-        <button id="copy-btn" class="absolute top-4 right-4 p-2 rounded-lg bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white transition" title="Copy to clipboard">
+        <button id="copy-btn" class="absolute top-4 right-4 p-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-500 hover:text-gray-700 transition" title="Copy to clipboard">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9.75a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184"/></svg>
         </button>
-<pre class="text-sm text-gray-400 font-mono leading-relaxed overflow-x-auto"><code id="bibtex">@article{li2025eap,
+<pre class="text-sm text-gray-600 font-mono leading-relaxed overflow-x-auto"><code id="bibtex">@article{li2025eap,
   title     = {Toward Deep Representation Learning for Event-enhanced
                Visual Autonomous Perception: the eAP Dataset},
   author    = {Li, Jinghang and Li, Shichao and Lian, Qing
@@ -872,13 +914,13 @@
   <!-- ============================================================ -->
   <!-- FOOTER                                                        -->
   <!-- ============================================================ -->
-  <footer class="border-t border-white/5 py-8">
-    <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-500">
+  <footer class="border-t border-gray-200 py-8">
+    <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-400">
       <p>&copy; 2025 eAP Dataset &middot; Neuromorphic Automation and Intelligence Lab (NAIL), Hunan University</p>
       <div class="flex items-center gap-6">
-        <a href="https://github.com" target="_blank" rel="noopener" class="hover:text-white transition">GitHub</a>
-        <a href="https://arxiv.org" target="_blank" rel="noopener" class="hover:text-white transition">Paper</a>
-        <a href="mailto:eeyzhou@hnu.edu.cn" class="hover:text-white transition">Contact</a>
+        <a href="https://github.com" target="_blank" rel="noopener" class="hover:text-gray-700 transition">GitHub</a>
+        <a href="https://arxiv.org" target="_blank" rel="noopener" class="hover:text-gray-700 transition">Paper</a>
+        <a href="mailto:eeyzhou@hnu.edu.cn" class="hover:text-gray-700 transition">Contact</a>
       </div>
     </div>
   </footer>
@@ -911,18 +953,26 @@
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    // --- Navbar active link highlight ---
+    // --- Navbar active link highlight (rAF-throttled) ---
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('nav a[href^="#"]');
-    window.addEventListener('scroll', () => {
+    let rafPending = false;
+    function updateActiveLink() {
       let current = '';
       sections.forEach(s => {
         if (window.scrollY >= s.offsetTop - 200) current = s.id;
       });
       navLinks.forEach(a => {
-        a.classList.toggle('text-white', a.getAttribute('href') === '#' + current);
+        a.classList.toggle('text-slate-900', a.getAttribute('href') === '#' + current);
       });
-    });
+      rafPending = false;
+    }
+    window.addEventListener('scroll', () => {
+      if (!rafPending) {
+        rafPending = true;
+        requestAnimationFrame(updateActiveLink);
+      }
+    }, { passive: true });
   </script>
 </body>
 </html>
