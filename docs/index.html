@@ -161,31 +161,48 @@
       </h1>
 
       <!-- Authors -->
-      <p class="animate-fade-up delay-200 text-xl text-gray-500 mb-2">
-        <span class="text-slate-900 font-medium">Jinghang Li</span><sup>*</sup>,
-        <span class="text-slate-900 font-medium">Shichao Li</span><sup>*</sup>,
-        <span class="text-slate-900 font-medium">Qing Lian</span>,
-        <span class="text-slate-900 font-medium">Peiliang Li</span>,
-        <span class="text-slate-900 font-medium">Xiaozhi Chen</span>,
-        <span class="text-slate-900 font-medium">Yi Zhou</span><sup>&dagger;</sup>
+      <!-- Authors -->
+      <p class="animate-fade-up delay-200 text-xl text-gray-500 mb-4">
+        <span class="text-slate-900 font-medium">Jinghang Li</span><sup class="text-blue-500">*,1</sup>,
+        <span class="text-slate-900 font-medium">Shichao Li</span><sup class="text-blue-500">*,2</sup>,
+        <span class="text-slate-900 font-medium">Qing Lian</span><sup class="text-blue-500">2</sup>,
+        <span class="text-slate-900 font-medium">Peiliang Li</span><sup class="text-blue-500">2</sup>,
+        <span class="text-slate-900 font-medium">Xiaozhi Chen</span><sup class="text-blue-500">2</sup>,
+        <span class="text-slate-900 font-medium">Yi Zhou</span><sup class="text-blue-500">&dagger;,1</sup>
       </p>
-      <div class="animate-fade-up delay-200 flex flex-wrap items-end justify-center gap-8 mb-4">
+
+      <!-- Affiliations -->
+      <div class="animate-fade-up delay-200 text-sm text-gray-500 mb-2 space-y-1">
+        <p><sup class="text-blue-500">1</sup> Neuromorphic Automation and Intelligence Lab (NAIL), Hunan University</p>
+        <p><sup class="text-blue-500">2</sup> Zhuoyu Technology</p>
+      </div>
+
+      <!-- Footnotes -->
+      <p class="animate-fade-up delay-200 text-xs text-gray-400 mb-8">
+        <sup>*</sup> Equal contribution &nbsp;&nbsp; <sup>&dagger;</sup> Corresponding author: Yi Zhou
+      </p>
+
+      <!-- Logos -->
+      <div class="animate-fade-up delay-200 flex flex-wrap items-center justify-center gap-10 mb-10">
         <div class="flex flex-col items-center gap-2">
-          <img src="assets/logo/hnu.jpg" alt="Hunan University" class="h-14 rounded" />
+          <div class="h-20 w-36 flex items-center justify-center">
+            <img src="assets/logo/hnu.jpg" alt="Hunan University" class="max-h-20 max-w-full w-auto object-contain rounded" />
+          </div>
           <span class="text-xs text-gray-500 font-medium">Hunan University</span>
         </div>
         <div class="flex flex-col items-center gap-2">
-          <img src="assets/logo/NAIL.ico" alt="NAIL Lab" class="h-14" />
+          <div class="h-20 w-36 flex items-center justify-center">
+            <img src="assets/logo/NAIL.ico" alt="NAIL Lab" class="max-h-20 max-w-full w-auto object-contain" />
+          </div>
           <span class="text-xs text-gray-500 font-medium">NAIL Lab</span>
         </div>
         <div class="flex flex-col items-center gap-2">
-          <img src="assets/logo/zyt.png" alt="Zhuoyu Technology" class="h-14" />
+          <div class="h-20 w-36 flex items-center justify-center">
+            <img src="assets/logo/zyt.png" alt="Zhuoyu Technology" class="max-h-20 max-w-full w-auto object-contain" />
+          </div>
           <span class="text-xs text-gray-500 font-medium">Zhuoyu Technology</span>
         </div>
       </div>
-      <p class="animate-fade-up delay-200 text-xs text-gray-400 mb-10">
-        <sup>*</sup> Equal contribution &nbsp;&nbsp; <sup>&dagger;</sup> Corresponding author
-      </p>
 
       <!-- CTA Buttons -->
       <div class="animate-fade-up delay-300 flex flex-wrap items-center justify-center gap-4">
@@ -446,7 +463,7 @@
               <td class="px-6 py-4 font-bold text-slate-900">Total</td>
               <td class="px-6 py-4 font-bold text-slate-900">236.06 km</td>
               <td class="px-6 py-4 text-gray-500">&mdash;</td>
-              <td class="px-6 py-4 font-bold text-slate-900">46 / 12</td>
+              <td class="px-6 py-4 font-bold text-slate-900">58</td>
               <td class="px-6 py-4 font-bold text-slate-900">290 min</td>
             </tr>
           </tbody>
@@ -544,16 +561,34 @@
           <p class="text-center text-xs text-gray-400 mt-3 mb-1">3D cuboid annotations projected on RGB and event views across diverse driving scenarios and illumination conditions.</p>
         </div>
       </div>
-      <div class="reveal grid md:grid-cols-2 gap-6">
+      <div class="reveal grid md:grid-cols-2 gap-6 items-start">
         <div class="glass rounded-2xl overflow-hidden p-2">
           <img src="assets/imgs/lidar_anno.jpg" alt="BEV visualization of LiDAR point cloud with annotated 3D bounding boxes and velocity curves" class="rounded-xl w-full" loading="lazy" />
           <p class="text-center text-xs text-gray-400 mt-3 mb-1">BEV of LiDAR point cloud with 3D boxes and velocity curves of object trajectories.</p>
         </div>
-        <div class="glass rounded-2xl overflow-hidden p-2">
-          <img src="assets/imgs/refined_proj_seg.png" alt="Projected point cloud on RGB image showing LiDAR-camera calibration quality" class="rounded-xl w-full" loading="lazy" />
+        <div class="glass rounded-2xl overflow-hidden p-2 flex flex-col">
+          <div class="flex-1 flex items-center justify-center">
+            <img src="assets/imgs/refined_proj_seg.png" alt="Projected point cloud on RGB image showing LiDAR-camera calibration quality" class="rounded-xl block mx-auto max-w-full" loading="lazy" id="proj-img" />
+          </div>
           <p class="text-center text-xs text-gray-400 mt-3 mb-1">Projected LiDAR point cloud on RGB image demonstrating calibration quality.</p>
         </div>
       </div>
+      <script>
+        (function() {
+          var left = document.querySelector('img[src="assets/imgs/lidar_anno.jpg"]');
+          var right = document.getElementById('proj-img');
+          function sync() {
+            if (left.naturalWidth && right.naturalWidth) {
+              right.style.maxHeight = left.offsetHeight + 'px';
+              right.style.width = 'auto';
+            }
+          }
+          left.addEventListener('load', sync);
+          right.addEventListener('load', sync);
+          window.addEventListener('resize', sync);
+          if (left.complete) sync();
+        })();
+      </script>
     </div>
   </section>
 
@@ -570,17 +605,6 @@
         </p>
       </div>
 
-      <!-- Model architecture and TTC diagram -->
-      <div class="reveal grid md:grid-cols-2 gap-6 mb-12">
-        <div class="glass rounded-2xl overflow-hidden p-2">
-          <img src="assets/imgs/model_architecture.jpg" alt="Garl-TTC model architecture with dual-encoder for RGB and event inputs" class="rounded-xl w-full" loading="lazy" />
-          <p class="text-center text-xs text-gray-400 mt-3 mb-1">Garl-TTC architecture: geometry-aware representation learning with dual RGB/event encoders.</p>
-        </div>
-        <div class="glass rounded-2xl overflow-hidden p-2">
-          <img src="assets/imgs/ttc_diagram.jpg" alt="TTC estimation diagram showing geometric prior" class="rounded-xl w-full" loading="lazy" />
-          <p class="text-center text-xs text-gray-400 mt-3 mb-1">Geometric prior: TTC is derived from object height ratio changes across consecutive frames.</p>
-        </div>
-      </div>
 
       <!-- TTC Estimation: eAP benchmark -->
       <div class="reveal mb-12">
