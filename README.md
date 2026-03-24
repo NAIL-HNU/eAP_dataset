@@ -6,7 +6,7 @@
 
 <p align="center">
 <a href="https://www.youtube.com/watch?v=6nuFrPViD3U">
-  <img src="https://img.youtube.com/vi/6nuFrPViD3U/maxresdefault.jpg" alt="eAP Dataset Overview" width="600"/>
+  <img src="assets/imgs/banner.png" alt="eAP Dataset Overview" width="600"/>
 </a>
 </p>
 
@@ -169,6 +169,4 @@ Key options:
 > python release_visualizer/visualize_release_sequence.py ...
 > ```
 
----
 
-![banner](assets/imgs/banner.png)
