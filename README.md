@@ -97,24 +97,70 @@ Event stream in HDF5 format. Events are accessed via a millisecond-to-index map 
 pip install -r release_visualizer/requirements.txt
 ```
 
-First, list available sequences:
+First, list available sequence IDs in a release root:
 
 ```bash
-env OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 KMP_INIT_AT_FORK=FALSE \
 python release_visualizer/visualize_release_sequence.py $DATASET_ROOT --list-sequences
 ```
 
-Then render a sequence to MP4:
+### Video visualization (`visualize_release_sequence.py`)
+
+Render a full sequence to MP4:
 
 ```bash
-env OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 KMP_INIT_AT_FORK=FALSE \
 python release_visualizer/visualize_release_sequence.py $DATASET_ROOT \
   --sequence-id <sequence_id> \
   --output-dir ./outputs
 ```
 
-The output is `./outputs/<sequence_id>_release_visualization.mp4`. The video shows RGB + event rendering (left) and a bird's-eye view with TTC annotations (right).
+Output: `./outputs/<sequence_id>_release_visualization.mp4`  
+Layout: RGB + event overlay (left panel) · bird's-eye view with TTC annotations (right panel).
 
-> If you encounter OpenMP shared-memory errors, the `env OMP_NUM_THREADS=1 ...` prefix is the fix.
+Pass `$DATASET_ROOT/<sequence_id>` directly to skip `--sequence-id`:
+
+```bash
+python release_visualizer/visualize_release_sequence.py $DATASET_ROOT/<sequence_id> \
+  --output-dir ./outputs
+```
+
+Key options:
+
+| Option | Default | Description |
+| --- | --- | --- |
+| `--fps` | 10 | Output video frame rate |
+| `--max-frames N` | — | Render only the first N frames |
+| `--frame-step N` | 1 | Render every Nth frame |
+| `--image-width` | 960 | Width of the left RGB/event panel (px) |
+| `--bev-width` | 760 | Width of the BEV panel (px) |
+| `--fwd-max` | 60.0 | BEV forward range (m) |
+| `--lat-max` | 30.0 | BEV lateral half-range (m) |
+
+### Frame sampling (`sample_release_frames.py`)
+
+Export a small set of randomly sampled rendered frames (PNG) for quick spot-checks:
+
+```bash
+python release_visualizer/sample_release_frames.py $DATASET_ROOT \
+  --sequence-id <sequence_id> \
+  --output-dir ./release_checks \
+  --samples-per-asset 5
+```
+
+Output: `./release_checks/<sequence_id>_<frame_idx>.png`
+
+Key options:
+
+| Option | Default | Description |
+| --- | --- | --- |
+| `--samples-per-asset` | 5 | Number of random frames per sequence |
+| `--seed` | 0 | Random seed for reproducible sampling |
+| `--image-width` | 960 | Width of the left panel (px) |
+| `--bev-width` | 760 | Width of the BEV panel (px) |
+
+> If you encounter OpenMP shared-memory errors, set thread counts explicitly:
+> ```bash
+> env OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 KMP_INIT_AT_FORK=FALSE \
+> python release_visualizer/visualize_release_sequence.py ...
+> ```
 
 
