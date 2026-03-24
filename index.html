@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>eAP Dataset — Toward Deep Representation Learning for Event-enhanced Visual Autonomous Perception</title>
+  <meta name="description" content="eAP: The largest multi-modal dataset with event cameras for autonomous driving perception. 58 sequences, 532k+ 3D boxes, 4.8h driving, 236km. IEEE TRO 2026." />
+
+  <!-- Open Graph / Twitter Card -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="eAP Dataset — Event-enhanced Visual Autonomous Perception" />
+  <meta property="og:description" content="The largest event-camera dataset for autonomous driving. 58 sequences, 532k+ 3D boxes, 4.8h driving, 236km. IEEE T-RO 2026." />
+  <meta property="og:image" content="assets/imgs/teaser.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="eAP Dataset — Event-enhanced Visual Autonomous Perception" />
+  <meta name="twitter:description" content="The largest event-camera dataset for autonomous driving. 58 sequences, 532k+ 3D boxes, 4.8h driving, 236km. IEEE T-RO 2026." />
+  <meta name="twitter:image" content="assets/imgs/teaser.jpg" />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: { 50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd', 400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a8a', 950: '#172554' },
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+          },
+        },
+      },
+    }
+  </script>
+
+  <!-- Inter + JetBrains Mono fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-up { animation: fade-up 0.7s ease-out both; }
+    .delay-100 { animation-delay: 0.1s; }
+    .delay-200 { animation-delay: 0.2s; }
+    .delay-300 { animation-delay: 0.3s; }
+    .delay-400 { animation-delay: 0.4s; }
+
+    .text-gradient {
+      background: linear-gradient(135deg, #2563eb 0%, #60a5fa 50%, #3b82f6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .glow-ring {
+      box-shadow: 0 4px 24px rgba(37, 99, 235, 0.12), 0 1px 4px rgba(0,0,0,0.06);
+    }
+
+    .glass {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .nav-blur {
+      backdrop-filter: saturate(180%) blur(16px);
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 1px 0 #e5e7eb;
+    }
+
+    .stat-number {
+      font-variant-numeric: tabular-nums;
+    }
+
+    section[id] {
+      scroll-margin-top: 72px;
+    }
+
+    .grid-bg {
+      background-color: #f0f4ff;
+      background-image:
+        linear-gradient(rgba(37,99,235,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(37,99,235,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+  </style>
+</head>
+
+<body class="bg-white text-gray-700 font-sans antialiased">
+
+  <!-- ============================================================ -->
+  <!-- NAVBAR                                                        -->
+  <!-- ============================================================ -->
+  <nav id="navbar" class="fixed top-0 inset-x-0 z-50 nav-blur border-b border-gray-200 transition-all duration-300">
+    <div class="max-w-6xl mx-auto flex items-center justify-between px-6 h-16">
+      <a href="#hero" class="text-lg font-bold tracking-tight text-slate-900">
+        <span class="text-primary-600">e</span>AP Dataset
+      </a>
+      <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-500">
+        <a href="#abstract"    class="hover:text-slate-900 transition">Abstract</a>
+        <a href="#modalities"  class="hover:text-slate-900 transition">Data</a>
+        <a href="#dataset"     class="hover:text-slate-900 transition">Dataset</a>
+        <a href="#showcase"    class="hover:text-slate-900 transition">Showcase</a>
+        <a href="#downloads"   class="hover:text-slate-900 transition">Downloads</a>
+        <a href="#annotations" class="hover:text-slate-900 transition">Annotations</a>
+        <a href="#authors"     class="hover:text-slate-900 transition">Authors</a>
+        <a href="#citation"    class="hover:text-slate-900 transition">Citation</a>
+      </div>
+      <button id="mobile-menu-btn" class="md:hidden text-gray-500 hover:text-slate-900" aria-label="Menu">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
+    <div id="mobile-menu" class="md:hidden hidden border-t border-gray-100 px-6 py-4 space-y-3 text-sm font-medium text-gray-500">
+      <a href="#abstract"    class="block hover:text-slate-900">Abstract</a>
+      <a href="#modalities"  class="block hover:text-slate-900">Data</a>
+      <a href="#dataset"     class="block hover:text-slate-900">Dataset</a>
+      <a href="#showcase"    class="block hover:text-slate-900">Showcase</a>
+      <a href="#downloads"   class="block hover:text-slate-900">Downloads</a>
+      <a href="#annotations" class="block hover:text-slate-900">Annotations</a>
+      <a href="#authors"     class="block hover:text-slate-900">Authors</a>
+      <a href="#citation"    class="block hover:text-slate-900">Citation</a>
+    </div>
+  </nav>
+
+  <!-- ============================================================ -->
+  <!-- HERO                                                          -->
+  <!-- ============================================================ -->
+  <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden bg-white pt-16">
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/8 rounded-full blur-[128px]"></div>
+      <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-blue-300/6 rounded-full blur-[100px]"></div>
+    </div>
+
+    <div class="relative z-10 max-w-4xl mx-auto px-6 text-center">
+      <!-- IEEE TRO Badge -->
+      <div class="animate-fade-up inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-blue-200 bg-blue-50 text-blue-600 text-sm font-medium mb-8">
+        <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+        IEEE Transactions on Robotics (T-RO) 2026
+      </div>
+
+      <!-- Title -->
+      <h1 class="animate-fade-up delay-100 text-3xl md:text-5xl font-extrabold tracking-tight leading-[1.2] mb-6 text-slate-900">
+        Toward Deep Representation Learning for Event-enhanced Visual Autonomous Perception:
+        <br/>
+        <span class="text-gradient">the eAP Dataset</span>
+      </h1>
+
+      <!-- Authors -->
+      <!-- Authors -->
+      <p class="animate-fade-up delay-200 text-xl text-gray-500 mb-4">
+        <span class="text-slate-900 font-medium">Jinghang Li</span><sup class="text-blue-500">*,1</sup>,
+        <span class="text-slate-900 font-medium">Shichao Li</span><sup class="text-blue-500">*,2</sup>,
+        <span class="text-slate-900 font-medium">Qing Lian</span><sup class="text-blue-500">2</sup>,
+        <span class="text-slate-900 font-medium">Peiliang Li</span><sup class="text-blue-500">2</sup>,
+        <span class="text-slate-900 font-medium">Xiaozhi Chen</span><sup class="text-blue-500">2</sup>,
+        <span class="text-slate-900 font-medium">Yi Zhou</span><sup class="text-blue-500">&dagger;,1</sup>
+      </p>
+
+      <!-- Affiliations -->
+      <div class="animate-fade-up delay-200 text-sm text-gray-500 mb-2 space-y-1">
+        <p><sup class="text-blue-500">1</sup> Neuromorphic Automation and Intelligence Lab (NAIL), Hunan University</p>
+        <p><sup class="text-blue-500">2</sup> Zhuoyu Technology</p>
+      </div>
+
+      <!-- Footnotes -->
+      <p class="animate-fade-up delay-200 text-xs text-gray-400 mb-8">
+        <sup>*</sup> Equal contribution &nbsp;&nbsp; <sup>&dagger;</sup> Corresponding author: Yi Zhou
+      </p>
+
+      <!-- Logos -->
+      <div class="animate-fade-up delay-200 flex flex-wrap items-center justify-center gap-10 mb-10">
+        <div class="flex flex-col items-center gap-2">
+          <div class="h-20 w-36 flex items-center justify-center">
+            <img src="assets/logo/hnu.jpg" alt="Hunan University" class="max-h-20 max-w-full w-auto object-contain rounded" />
+          </div>
+          <span class="text-xs text-gray-500 font-medium">Hunan University</span>
+        </div>
+        <div class="flex flex-col items-center gap-2">
+          <div class="h-20 w-36 flex items-center justify-center">
+            <img src="assets/logo/NAIL.ico" alt="NAIL Lab" class="max-h-20 max-w-full w-auto object-contain" />
+          </div>
+          <span class="text-xs text-gray-500 font-medium">NAIL Lab</span>
+        </div>
+        <div class="flex flex-col items-center gap-2">
+          <div class="h-20 w-36 flex items-center justify-center">
+            <img src="assets/logo/zyt.png" alt="Zhuoyu Technology" class="max-h-20 max-w-full w-auto object-contain" />
+          </div>
+          <span class="text-xs text-gray-500 font-medium">Zhuoyu Technology</span>
+        </div>
+      </div>
+
+      <!-- CTA Buttons -->
+      <div class="animate-fade-up delay-300 flex flex-wrap items-center justify-center gap-4">
+        <a href="https://arxiv.org/abs/2603.16303" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm transition shadow-sm shadow-blue-200">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/></svg>
+          Paper
+        </a>
+        <a href="assets/pdf/2603.16303v1.pdf" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-red-200 bg-red-50 text-red-600 hover:bg-red-100 hover:border-red-300 font-semibold text-sm transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
+          PDF
+        </a>
+        <a href="https://github.com/NAIL-HNU/eAP_dataset" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 hover:border-gray-300 font-semibold text-sm transition">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          GitHub
+        </a>
+        <a href="#downloads" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 hover:border-gray-300 font-semibold text-sm transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V3"/></svg>
+          Dataset
+        </a>
+      </div>
+
+      <!-- Hero video -->
+      <div class="animate-fade-up delay-400 mt-12 max-w-5xl mx-auto">
+        <div class="glass rounded-2xl overflow-hidden p-2 glow-ring aspect-video">
+          <iframe class="rounded-xl w-full h-full" src="https://www.youtube.com/embed/6nuFrPViD3U" title="eAP Dataset Overview Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+      </div>
+
+      <!-- Scroll indicator -->
+      <div class="animate-fade-up delay-400 mt-10">
+        <a href="#abstract" class="inline-block text-gray-400 hover:text-gray-600 transition">
+          <svg class="w-5 h-5 animate-bounce" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- ABSTRACT                                                      -->
+  <!-- ============================================================ -->
+  <section id="abstract" class="py-24 border-t border-gray-100">
+    <div class="max-w-4xl mx-auto px-6">
+      <div class="reveal text-center mb-12">
+        <p class="text-blue-600 text-sm font-semibold tracking-widest uppercase mb-3">Abstract</p>
+      </div>
+      <div class="reveal">
+        <p class="text-gray-600 leading-relaxed text-lg text-justify">
+          Recent visual autonomous perception systems achieve remarkable performances with deep representation learning. However, they fail in scenarios with challenging illumination. While event cameras can mitigate this problem, there is a lack of a large-scale dataset to develop event-enhanced deep visual perception models in autonomous driving scenes. To address the gap, we present the <em>eAP</em> (<strong class="font-bold text-slate-900">e</strong>vent-enhanced <strong class="font-bold text-slate-900">A</strong>utonomous <strong class="font-bold text-slate-900">P</strong>erception) dataset, the largest dataset with event cameras for autonomous perception. We demonstrate how <em>eAP</em> can facilitate the study of different autonomous perception tasks, including 3D vehicle detection and object time-to-contact (TTC) estimation, through deep representation learning. Based on <em>eAP</em>, we demonstrate the first successful use of events to improve a popular 3D vehicle detection network in challenging illumination scenarios. <em>eAP</em> also enables a devoted study of the representation learning problem of object TTC estimation. We show how a geometry-aware representation learning framework leads to the best event-based object TTC estimation network that operates at 200 FPS. The dataset, code, and pre-trained models will be made publicly available for future research.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- STATS                                                         -->
+  <!-- ============================================================ -->
+  <section id="stats" class="py-16 bg-blue-800">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="reveal text-center mb-10">
+        <p class="text-blue-300 text-sm font-semibold tracking-widest uppercase mb-3">At a Glance</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-white">Dataset Statistics</h2>
+      </div>
+      <div class="reveal grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
+        <div class="bg-white/10 border border-white/20 rounded-2xl p-6 text-center hover:bg-white/20 hover:-translate-y-0.5 transition-all group">
+          <div class="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center mb-3 mx-auto">
+            <svg class="w-5 h-5 text-blue-200" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 010 3.75H5.625a1.875 1.875 0 010-3.75z"/></svg>
+          </div>
+          <div class="stat-number text-3xl md:text-4xl font-extrabold text-white mb-1">58</div>
+          <div class="text-sm text-blue-200">Sequences</div>
+        </div>
+        <div class="bg-white/10 border border-white/20 rounded-2xl p-6 text-center hover:bg-white/20 hover:-translate-y-0.5 transition-all group">
+          <div class="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center mb-3 mx-auto">
+            <svg class="w-5 h-5 text-blue-200" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9"/></svg>
+          </div>
+          <div class="stat-number text-3xl md:text-4xl font-extrabold text-white mb-1">532k+</div>
+          <div class="text-sm text-blue-200">3D Bounding Boxes</div>
+          <div class="text-xs text-blue-300/70 mt-1">7-DoF cuboids</div>
+        </div>
+        <div class="bg-white/10 border border-white/20 rounded-2xl p-6 text-center hover:bg-white/20 hover:-translate-y-0.5 transition-all group">
+          <div class="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center mb-3 mx-auto">
+            <svg class="w-5 h-5 text-blue-200" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <div class="stat-number text-3xl md:text-4xl font-extrabold text-white mb-1">4.8h</div>
+          <div class="text-sm text-blue-200">Driving Duration</div>
+          <div class="text-xs text-blue-300/70 mt-1">290 minutes total</div>
+        </div>
+        <div class="bg-white/10 border border-white/20 rounded-2xl p-6 text-center hover:bg-white/20 hover:-translate-y-0.5 transition-all group">
+          <div class="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center mb-3 mx-auto">
+            <svg class="w-5 h-5 text-blue-200" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z"/></svg>
+          </div>
+          <div class="stat-number text-3xl md:text-4xl font-extrabold text-white mb-1">236km</div>
+          <div class="text-sm text-blue-200">Distance Covered</div>
+          <div class="text-xs text-blue-300/70 mt-1">Highway + Urban</div>
+        </div>
+        <div class="bg-white/10 border border-white/20 rounded-2xl p-6 text-center hover:bg-white/20 hover:-translate-y-0.5 transition-all group">
+          <div class="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center mb-3 mx-auto">
+            <svg class="w-5 h-5 text-blue-200" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/></svg>
+          </div>
+          <div class="stat-number text-3xl md:text-4xl font-extrabold text-white mb-1">174k</div>
+          <div class="text-sm text-blue-200">Annotated Frames</div>
+          <div class="text-xs text-blue-300/70 mt-1">138k train / 36k test</div>
+        </div>
+        <div class="bg-white/10 border border-white/20 rounded-2xl p-6 text-center hover:bg-white/20 hover:-translate-y-0.5 transition-all group">
+          <div class="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center mb-3 mx-auto">
+            <svg class="w-5 h-5 text-blue-200" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/></svg>
+          </div>
+          <div class="stat-number text-3xl md:text-4xl font-extrabold text-white mb-1">8</div>
+          <div class="text-sm text-blue-200">Object Classes</div>
+          <div class="text-xs text-blue-300/70 mt-1">Vehicle + VRU</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================ -->
+  <!-- DATA MODALITIES                                               -->
+  <!-- ============================================================ -->
+  <section id="modalities" class="py-24 border-t border-gray-100 grid-bg">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="reveal text-center mb-16">
+        <p class="text-blue-600 text-sm font-semibold tracking-widest uppercase mb-3">Data Modalities</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-slate-900">Multi-sensor Synchronized Capture</h2>
+        <p class="mt-4 text-gray-500 max-w-2xl mx-auto">
+          All sensors are hardware-synchronized at sub-microsecond precision using IEEE PTP and a 10 Hz trigger signal.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        <!-- RGB Camera -->
+        <div class="reveal glass rounded-2xl p-6 hover:border-blue-200 hover:shadow-md transition-all group">
+          <div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center mb-4 group-hover:bg-blue-100 transition">
+            <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z"/><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z"/></svg>
+          </div>
+          <h3 class="text-lg font-semibold text-slate-900 mb-2">RGB Camera</h3>
+          <p class="text-sm text-gray-500 leading-relaxed">
+            FLIR Blackfly S at <strong class="text-gray-700">1920&times;1200</strong>, 10 Hz. Auto-exposure with exposure time priority (1&ndash;20 ms) for minimal motion blur.
+          </p>
+        </div>
+
+        <!-- Event Camera -->
+        <div class="reveal glass rounded-2xl p-6 hover:border-blue-200 hover:shadow-md transition-all group">
+          <div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center mb-4 group-hover:bg-blue-100 transition">
+            <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg>
+          </div>
+          <h3 class="text-lg font-semibold text-slate-900 mb-2">Event Camera</h3>
+          <p class="text-sm text-gray-500 leading-relaxed">
+            Prophesee EVK4 at <strong class="text-gray-700">1280&times;720</strong>. Microsecond temporal resolution with high dynamic range, ideal for challenging illumination.
+          </p>
+        </div>
+
+        <!-- LiDAR -->
+        <div class="reveal glass rounded-2xl p-6 hover:border-blue-200 hover:shadow-md transition-all group">
+          <div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center mb-4 group-hover:bg-blue-100 transition">
+            <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 3.75H6A2.25 2.25 0 003.75 6v1.5M16.5 3.75H18A2.25 2.25 0 0120.25 6v1.5m0 9V18A2.25 2.25 0 0118 20.25h-1.5m-9 0H6A2.25 2.25 0 013.75 18v-1.5M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          </div>
+          <h3 class="text-lg font-semibold text-slate-900 mb-2">LiDAR</h3>
+          <p class="text-sm text-gray-500 leading-relaxed">
+            <strong class="text-gray-700">3&times; Livox TELE-15</strong> (320 m range) + <strong class="text-gray-700">1&times; Livox Mid-360</strong> for dense point clouds used in 3D annotation.
+          </p>
+        </div>
+
+        <!-- GNSS-IMU -->
+        <div class="reveal glass rounded-2xl p-6 hover:border-blue-200 hover:shadow-md transition-all group">
+          <div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center mb-4 group-hover:bg-blue-100 transition">
+            <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
+          </div>
+          <h3 class="text-lg font-semibold text-slate-900 mb-2">GNSS-IMU</h3>
+          <p class="text-sm text-gray-500 leading-relaxed">
+            u-blox ZED-F9K with RTK (0.2 m position accuracy). Ego-pose via tightly-coupled GNSS-Visual-Inertial fusion (GVINS).
+          </p>
+        </div>
+      </div>
+
+      <!-- Sensor setup image -->
+      <div class="reveal">
+        <div class="glass rounded-2xl overflow-hidden p-2 glow-ring max-w-3xl mx-auto">
+          <img src="assets/imgs/sensor_setup.jpg" alt="Sensor configuration for the eAP dataset showing the vehicle with mounted cameras and LiDAR sensors" class="rounded-xl w-full" loading="lazy" />
+          <p class="text-center text-xs text-gray-400 mt-3 mb-1">Sensor configuration: the event camera and RGB camera are rigidly mounted with a narrow 3 cm baseline.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- DATASET DETAILS                                               -->
+  <!-- ============================================================ -->
+  <section id="dataset" class="py-24 border-t border-gray-100">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="reveal text-center mb-16">
+        <p class="text-blue-600 text-sm font-semibold tracking-widest uppercase mb-3">Dataset Details</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-slate-900">Comprehensive Driving Coverage</h2>
+        <p class="mt-4 text-gray-500 max-w-2xl mx-auto">
+          Diverse driving scenarios spanning highways, urban roads, and low-light conditions across different times of day and weather.
+        </p>
+      </div>
+
+      <div class="reveal glass rounded-2xl overflow-hidden mb-8">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="border-b border-gray-200 text-left text-gray-500 bg-gray-50">
+              <th class="px-6 py-4 font-medium">Region</th>
+              <th class="px-6 py-4 font-medium">Distance</th>
+              <th class="px-6 py-4 font-medium">Illumination</th>
+              <th class="px-6 py-4 font-medium">Sequences (Train/Test)</th>
+              <th class="px-6 py-4 font-medium">Duration (Train/Test)</th>
+            </tr>
+          </thead>
+          <tbody class="text-gray-600">
+            <tr class="border-b border-gray-100">
+              <td class="px-6 py-3 font-medium text-slate-900" rowspan="3">Highways</td>
+              <td class="px-6 py-3" rowspan="3">178.44 km</td>
+              <td class="px-6 py-3">Sunny</td>
+              <td class="px-6 py-3">13 / 3</td>
+              <td class="px-6 py-3">65 / 15 min</td>
+            </tr>
+            <tr class="border-b border-gray-100">
+              <td class="px-6 py-3">Cloudy</td>
+              <td class="px-6 py-3">10 / 1</td>
+              <td class="px-6 py-3">50 / 5 min</td>
+            </tr>
+            <tr class="border-b border-gray-100">
+              <td class="px-6 py-3">Twilight</td>
+              <td class="px-6 py-3">7 / 2</td>
+              <td class="px-6 py-3">35 / 10 min</td>
+            </tr>
+            <tr class="border-b border-gray-100">
+              <td class="px-6 py-3 font-medium text-slate-900" rowspan="4">Urban</td>
+              <td class="px-6 py-3" rowspan="4">52.61 km</td>
+              <td class="px-6 py-3">Sunny</td>
+              <td class="px-6 py-3">5 / 1</td>
+              <td class="px-6 py-3">25 / 5 min</td>
+            </tr>
+            <tr class="border-b border-gray-100">
+              <td class="px-6 py-3">Cloudy</td>
+              <td class="px-6 py-3">4 / 1</td>
+              <td class="px-6 py-3">20 / 5 min</td>
+            </tr>
+            <tr class="border-b border-gray-100">
+              <td class="px-6 py-3">Twilight</td>
+              <td class="px-6 py-3">1 / 1</td>
+              <td class="px-6 py-3">5 / 5 min</td>
+            </tr>
+            <tr class="border-b border-gray-100">
+              <td class="px-6 py-3">Night</td>
+              <td class="px-6 py-3">5 / 2</td>
+              <td class="px-6 py-3">25 / 10 min</td>
+            </tr>
+            <tr class="border-b border-gray-100">
+              <td class="px-6 py-3 font-medium text-slate-900">Low-light</td>
+              <td class="px-6 py-3">5.01 km</td>
+              <td class="px-6 py-3">Night</td>
+              <td class="px-6 py-3">1 / 1</td>
+              <td class="px-6 py-3">5 / 5 min</td>
+            </tr>
+            <tr class="bg-gray-50">
+              <td class="px-6 py-4 font-bold text-slate-900">Total</td>
+              <td class="px-6 py-4 font-bold text-slate-900">236.06 km</td>
+              <td class="px-6 py-4 text-gray-500">&mdash;</td>
+              <td class="px-6 py-4 font-bold text-slate-900">58</td>
+              <td class="px-6 py-4 font-bold text-slate-900">290 min</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="reveal text-center text-sm text-gray-400">
+        Train: 46 sequences (138k frames) &middot; Test: 12 sequences (36k frames) &middot; Split at sequence level for fair evaluation.
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- ANNOTATIONS                                                   -->
+  <!-- ============================================================ -->
+  <section id="annotations" class="py-24 border-t border-gray-100 grid-bg">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="reveal text-center mb-16">
+        <p class="text-blue-600 text-sm font-semibold tracking-widest uppercase mb-3">Annotations</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-slate-900">Rich, Multi-dimensional Labels</h2>
+        <p class="mt-4 text-gray-500 max-w-2xl mx-auto">
+          Pre-labeled via BEVFusion with 500k in-house frames, tracked by 3D Kalman Filter, then manually verified and corrected by human annotators.
+        </p>
+      </div>
+
+      <div class="reveal grid md:grid-cols-2 gap-8 mb-12">
+        <!-- Left: annotation types list -->
+        <div class="space-y-6">
+          <div class="flex gap-4">
+            <div class="w-10 h-10 rounded-lg bg-green-50 flex items-center justify-center shrink-0 mt-1">
+              <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+            </div>
+            <div>
+              <h4 class="font-semibold text-slate-900">3D Bounding Boxes</h4>
+              <p class="text-sm text-gray-500 mt-1">7-DoF cuboid annotations (x, y, z, l, w, h, yaw) in ego-vehicle coordinate system with front-camera projection.</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <div class="w-10 h-10 rounded-lg bg-green-50 flex items-center justify-center shrink-0 mt-1">
+              <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+            </div>
+            <div>
+              <h4 class="font-semibold text-slate-900">Object Tracking</h4>
+              <p class="text-sm text-gray-500 mt-1">Consistent tracking IDs across frames with 11-dimensional state vectors (location, orientation, size, velocity, angular velocity).</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <div class="w-10 h-10 rounded-lg bg-green-50 flex items-center justify-center shrink-0 mt-1">
+              <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+            </div>
+            <div>
+              <h4 class="font-semibold text-slate-900">Velocity &amp; TTC</h4>
+              <p class="text-sm text-gray-500 mt-1">Per-object ego-relative speed vectors and time-to-collision (TTC) ground truth: &tau; = min(Z) / v<sub>rel</sub>.</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <div class="w-10 h-10 rounded-lg bg-green-50 flex items-center justify-center shrink-0 mt-1">
+              <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+            </div>
+            <div>
+              <h4 class="font-semibold text-slate-900">Calibration &amp; Synchronization</h4>
+              <p class="text-sm text-gray-500 mt-1">Full intrinsic/extrinsic calibration via Kalibr and Calib-Anything. Sub-microsecond temporal alignment. Narrow-baseline (&lt;5 px disparity) RGB-event mapping.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: class table -->
+        <div class="glass rounded-2xl p-6">
+          <h4 class="font-semibold text-slate-900 mb-4">Supported Object Classes</h4>
+          <div class="grid grid-cols-2 gap-3 text-sm">
+            <div class="flex items-center gap-2 text-gray-600"><span class="w-2 h-2 rounded-full bg-blue-400"></span>Car</div>
+            <div class="flex items-center gap-2 text-gray-600"><span class="w-2 h-2 rounded-full bg-blue-400"></span>Bus</div>
+            <div class="flex items-center gap-2 text-gray-600"><span class="w-2 h-2 rounded-full bg-blue-400"></span>Truck</div>
+            <div class="flex items-center gap-2 text-gray-600"><span class="w-2 h-2 rounded-full bg-blue-400"></span>SUV</div>
+            <div class="flex items-center gap-2 text-gray-600"><span class="w-2 h-2 rounded-full bg-green-500"></span>Pedestrian</div>
+            <div class="flex items-center gap-2 text-gray-600"><span class="w-2 h-2 rounded-full bg-yellow-500"></span>Motorcycle</div>
+            <div class="flex items-center gap-2 text-gray-600"><span class="w-2 h-2 rounded-full bg-yellow-500"></span>Bicycle</div>
+            <div class="flex items-center gap-2 text-gray-600"><span class="w-2 h-2 rounded-full bg-orange-500"></span>Tricycle</div>
+          </div>
+
+          <h4 class="font-semibold text-slate-900 mt-6 mb-3">Future Annotation Extensions</h4>
+          <div class="grid grid-cols-2 gap-2 text-sm text-gray-400">
+            <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-gray-300"></span>Dense TTC maps</div>
+            <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-gray-300"></span>Optical flow</div>
+            <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-gray-300"></span>Depth maps</div>
+            <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-gray-300"></span>Segmentation masks</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Annotation images -->
+      <div class="reveal mb-6">
+        <div class="glass rounded-2xl overflow-hidden p-2">
+          <img src="assets/imgs/cuboid_anno.jpg" alt="3D cuboid annotation examples on RGB and event camera views across different driving scenarios" class="rounded-xl w-full" loading="lazy" />
+          <p class="text-center text-xs text-gray-400 mt-3 mb-1">3D cuboid annotations projected on RGB and event views across diverse driving scenarios and illumination conditions.</p>
+        </div>
+      </div>
+      <div class="reveal grid md:grid-cols-2 gap-6 items-start">
+        <div class="glass rounded-2xl overflow-hidden p-2">
+          <img src="assets/imgs/lidar_anno.jpg" alt="BEV visualization of LiDAR point cloud with annotated 3D bounding boxes and velocity curves" class="rounded-xl w-full" loading="lazy" />
+          <p class="text-center text-xs text-gray-400 mt-3 mb-1">BEV of LiDAR point cloud with 3D boxes and velocity curves of object trajectories.</p>
+        </div>
+        <div class="glass rounded-2xl overflow-hidden p-2 flex flex-col">
+          <div class="flex-1 flex items-center justify-center">
+            <img src="assets/imgs/refined_proj_seg.png" alt="Projected point cloud on RGB image showing LiDAR-camera calibration quality" class="rounded-xl block mx-auto max-w-full" loading="lazy" id="proj-img" />
+          </div>
+          <p class="text-center text-xs text-gray-400 mt-3 mb-1">Projected LiDAR point cloud on RGB image demonstrating calibration quality.</p>
+        </div>
+      </div>
+      <script>
+        (function() {
+          var left = document.querySelector('img[src="assets/imgs/lidar_anno.jpg"]');
+          var right = document.getElementById('proj-img');
+          function sync() {
+            if (left.naturalWidth && right.naturalWidth) {
+              right.style.maxHeight = left.offsetHeight + 'px';
+              right.style.width = 'auto';
+            }
+          }
+          left.addEventListener('load', sync);
+          right.addEventListener('load', sync);
+          window.addEventListener('resize', sync);
+          if (left.complete) sync();
+        })();
+      </script>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SHOWCASE                                                      -->
+  <!-- ============================================================ -->
+  <section id="showcase" class="py-24 border-t border-gray-100 bg-slate-50/60">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="reveal text-center mb-14">
+        <p class="text-blue-600 text-sm font-semibold tracking-widest uppercase mb-3">Showcase</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-slate-900">Representative Release Videos</h2>
+        <p class="mt-4 text-gray-500 max-w-3xl mx-auto">
+          The examples below are 10-second previews rendered directly from the released assets.
+          They are grouped by road type.
+        </p>
+      </div>
+      <div id="showcase-root" class="space-y-14">
+        <div class="glass rounded-2xl p-8 text-center text-gray-400">Loading showcase videos...</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- DOWNLOADS                                                     -->
+  <!-- ============================================================ -->
+  <section id="downloads" class="py-24 border-t border-gray-100">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="reveal text-center mb-14">
+        <p class="text-blue-600 text-sm font-semibold tracking-widest uppercase mb-3">Downloads</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-slate-900">Per-Asset Release Bundles</h2>
+        <p class="mt-4 text-gray-500 max-w-3xl mx-auto">
+          Each asset is distributed as a standalone <span class="font-mono text-slate-700">&lt;asset_id&gt;.zip</span>.
+          The main table covers all assets, and the HDR table below groups all HDR assets in one place.
+        </p>
+      </div>
+      <div id="downloads-root" class="space-y-14">
+        <div class="glass rounded-2xl p-8 text-center text-gray-400">Loading download catalog...</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- AUTHORS                                                       -->
+  <!-- ============================================================ -->
+  <section id="authors" class="py-24 border-t border-gray-100 grid-bg">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="reveal text-center mb-16">
+        <p class="text-blue-600 text-sm font-semibold tracking-widest uppercase mb-3">Team</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-slate-900">Authors</h2>
+      </div>
+
+      <div class="reveal grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+        <!-- Jinghang Li -->
+        <div class="glass rounded-2xl p-4 text-center hover:border-blue-200 hover:shadow-md transition-all">
+          <div class="w-full aspect-[3/4] mx-auto mb-3 rounded-xl overflow-hidden">
+            <img src="assets/authors/lijinghang.jpg" alt="Jinghang Li" class="w-full h-full object-cover object-top" loading="lazy" />
+          </div>
+          <h4 class="text-sm font-semibold text-slate-900">Jinghang Li<sup>*</sup></h4>
+          <p class="text-xs text-gray-500 mt-1">Ph.D. Student</p>
+          <p class="text-xs text-gray-400">Hunan University</p>
+        </div>
+        <!-- Shichao Li -->
+        <div class="glass rounded-2xl p-4 text-center hover:border-blue-200 hover:shadow-md transition-all">
+          <div class="w-full aspect-[3/4] mx-auto mb-3 rounded-xl overflow-hidden">
+            <img src="assets/authors/lishichao.jpg" alt="Shichao Li" class="w-full h-full object-cover object-top" loading="lazy" />
+          </div>
+          <h4 class="text-sm font-semibold text-slate-900">Shichao Li<sup>*</sup></h4>
+          <p class="text-xs text-gray-500 mt-1">Senior Research Engineer</p>
+          <p class="text-xs text-gray-400">ByteDance</p>
+        </div>
+        <!-- Qing Lian -->
+        <div class="glass rounded-2xl p-4 text-center hover:border-blue-200 hover:shadow-md transition-all">
+          <div class="w-full aspect-[3/4] mx-auto mb-3 rounded-xl overflow-hidden">
+            <img src="assets/authors/lianqing.jpg" alt="Qing Lian" class="w-full h-full object-cover object-top" loading="lazy" />
+          </div>
+          <h4 class="text-sm font-semibold text-slate-900">Qing Lian</h4>
+          <p class="text-xs text-gray-500 mt-1">Researcher</p>
+          <p class="text-xs text-gray-400">Zhuoyu Technology</p>
+        </div>
+        <!-- Peiliang Li -->
+        <div class="glass rounded-2xl p-4 text-center hover:border-blue-200 hover:shadow-md transition-all">
+          <div class="w-full aspect-[3/4] mx-auto mb-3 rounded-xl overflow-hidden">
+            <img src="assets/authors/lipeiliang.jpg" alt="Peiliang Li" class="w-full h-full object-cover object-top" loading="lazy" />
+          </div>
+          <h4 class="text-sm font-semibold text-slate-900">Peiliang Li</h4>
+          <p class="text-xs text-gray-500 mt-1">Lead, E2E Self-Driving &amp; Next-Gen Algorithms</p>
+          <p class="text-xs text-gray-400">Zhuoyu Technology</p>
+        </div>
+        <!-- Xiaozhi Chen -->
+        <div class="glass rounded-2xl p-4 text-center hover:border-blue-200 hover:shadow-md transition-all">
+          <div class="w-full aspect-[3/4] mx-auto mb-3 rounded-xl overflow-hidden">
+            <img src="assets/authors/chenxiaozhi.jpeg" alt="Xiaozhi Chen" class="w-full h-full object-cover object-top" loading="lazy" />
+          </div>
+          <h4 class="text-sm font-semibold text-slate-900">Xiaozhi Chen</h4>
+          <p class="text-xs text-gray-500 mt-1">Director of AI Research</p>
+          <p class="text-xs text-gray-400">Zhuoyu Technology</p>
+        </div>
+        <!-- Yi Zhou -->
+        <div class="glass rounded-2xl p-4 text-center hover:border-blue-200 hover:shadow-md transition-all">
+          <div class="w-full aspect-[3/4] mx-auto mb-3 rounded-xl overflow-hidden">
+            <img src="assets/authors/zhouyi.png" alt="Yi Zhou" class="w-full h-full object-cover object-top" loading="lazy" />
+          </div>
+          <h4 class="text-sm font-semibold text-slate-900">Yi Zhou<sup>&dagger;</sup></h4>
+          <p class="text-xs text-gray-500 mt-1">Professor</p>
+          <p class="text-xs text-gray-400">Hunan University</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- CITATION                                                      -->
+  <!-- ============================================================ -->
+  <section id="citation" class="py-24 border-t border-gray-100">
+    <div class="max-w-3xl mx-auto px-6">
+      <div class="reveal text-center mb-8">
+        <p class="text-blue-600 text-sm font-semibold tracking-widest uppercase mb-3">Citation</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-slate-900">Cite Our Work</h2>
+      </div>
+
+      <div class="reveal glass rounded-2xl p-6 relative group">
+        <button id="copy-btn" class="absolute top-4 right-4 p-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-500 hover:text-gray-700 transition" title="Copy to clipboard">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9.75a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184"/></svg>
+        </button>
+<pre class="text-sm text-gray-600 font-mono leading-relaxed overflow-x-auto"><code id="bibtex">@misc{li2026eap,
+  title         = {Toward Deep Representation Learning for Event-Enhanced
+                   Visual Autonomous Perception: the eAP Dataset},
+  author        = {Li, Jinghang and Li, Shichao and Lian, Qing
+                   and Li, Peiliang and Chen, Xiaozhi and Zhou, Yi},
+  year          = {2026},
+  eprint        = {2603.16303},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.RO},
+  url           = {https://arxiv.org/abs/2603.16303},
+}</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- FOOTER                                                        -->
+  <!-- ============================================================ -->
+  <footer class="border-t border-gray-200 py-8">
+    <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-400">
+      <p>&copy; 2026 eAP Dataset &middot; Neuromorphic Automation and Intelligence Lab (NAIL), Hunan University</p>
+      <div class="flex items-center gap-6">
+        <a href="https://github.com/NAIL-HNU/eAP_dataset" target="_blank" rel="noopener" class="hover:text-gray-700 transition">GitHub</a>
+        <a href="https://arxiv.org/abs/2603.16303" target="_blank" rel="noopener" class="hover:text-gray-700 transition">Paper</a>
+        <a href="mailto:eeyzhou@hnu.edu.cn" class="hover:text-gray-700 transition">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================================ -->
+  <!-- SCRIPTS                                                       -->
+  <!-- ============================================================ -->
+  <script>
+    // --- Mobile menu toggle ---
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+    mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+
+    // --- Copy bibtex ---
+    document.getElementById('copy-btn').addEventListener('click', () => {
+      const text = document.getElementById('bibtex').textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.getElementById('copy-btn');
+        btn.innerHTML = '<svg class="w-4 h-4 text-green-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>';
+        setTimeout(() => {
+          btn.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9.75a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184"/></svg>';
+        }, 2000);
+      });
+    });
+
+    // --- Scroll reveal ---
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // --- Navbar active link highlight (rAF-throttled) ---
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('nav a[href^="#"]');
+    let rafPending = false;
+    function updateActiveLink() {
+      let current = '';
+      sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 200) current = s.id;
+      });
+      navLinks.forEach(a => {
+        a.classList.toggle('text-slate-900', a.getAttribute('href') === '#' + current);
+      });
+      rafPending = false;
+    }
+    window.addEventListener('scroll', () => {
+      if (!rafPending) {
+        rafPending = true;
+        requestAnimationFrame(updateActiveLink);
+      }
+    }, { passive: true });
+
+    function escapeHtml(text) {
+      return String(text ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function badge(text, tone = 'gray') {
+      const styles = {
+        blue:  'bg-blue-50 text-blue-700 border-blue-200',
+        slate: 'bg-slate-50 text-slate-700 border-slate-200',
+        gray:  'bg-gray-50 text-gray-700 border-gray-200',
+      };
+      return `<span class="inline-flex items-center rounded-full border px-2.5 py-1 text-xs font-medium ${styles[tone] || styles.gray}">${escapeHtml(text)}</span>`;
+    }
+
+    function downloadButton(asset) {
+      if (asset.dropbox_url) {
+        return `
+          <a href="${escapeHtml(asset.dropbox_url)}" target="_blank" rel="noopener"
+             class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700">
+            Download
+          </a>
+        `;
+      }
+      return `
+        <span class="inline-flex items-center rounded-lg border border-gray-200 bg-gray-100 px-4 py-2 text-sm font-semibold text-gray-400">
+          Link pending
+        </span>
+      `;
+    }
+
+    function buildShowcaseSection(items) {
+      const cards = items.map((item) => `
+        <article class="glass rounded-2xl p-4 md:p-5">
+          <div class="mb-4 flex flex-wrap items-center gap-2">
+            ${badge(item.asset_id, 'slate')}
+            ${badge(item.road_type_en, 'blue')}
+            ${badge(item.weather_en)}
+          </div>
+          <div class="overflow-hidden rounded-xl border border-gray-200 bg-black">
+            <video class="aspect-video w-full" controls preload="metadata" playsinline muted>
+              <source src="${escapeHtml(item.video_path)}" type="video/mp4" />
+            </video>
+          </div>
+        </article>
+      `).join('');
+
+      return `<div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">${cards}</div>`;
+    }
+
+    function buildAssetLink(asset) {
+      const label = escapeHtml(asset.asset_id);
+      const title = escapeHtml(asset.zip_name || asset.asset_id);
+      if (asset.dropbox_url) {
+        return `<a href="${escapeHtml(asset.dropbox_url)}" target="_blank" rel="noopener" class="font-medium text-blue-600 underline decoration-blue-200 underline-offset-4 transition hover:text-blue-700 hover:decoration-blue-400" title="${title}">${label}</a>`;
+      }
+      return `<span class="font-medium text-slate-400" title="${title}">${label}</span>`;
+    }
+
+    function buildDownloadTable(title, assets) {
+      const roadTypes = ['Highways', 'Urban', 'Low-light'];
+      const weathers = ['Sunny', 'Cloudy', 'Twilight', 'Night'];
+      const rows = weathers.map((weather) => {
+        const cols = roadTypes.map((roadType) => {
+          const cellAssets = assets
+            .filter((asset) => asset.weather === weather && asset.road_type === roadType)
+            .sort((a, b) => String(a.asset_id).localeCompare(String(b.asset_id)));
+
+          if (!cellAssets.length) {
+            return `<td class="border border-gray-200 px-4 py-4 align-top text-sm text-gray-300">-</td>`;
+          }
+
+          const items = cellAssets.map((asset) => `
+            <li class="flex flex-wrap items-center gap-2">
+              ${buildAssetLink(asset)}
+            </li>
+          `).join('');
+
+          return `
+            <td class="border border-gray-200 px-4 py-4 align-top">
+              <ul class="space-y-2 text-sm">${items}</ul>
+            </td>
+          `;
+        }).join('');
+
+        return `
+          <tr>
+            <th class="border border-gray-200 bg-slate-50 px-4 py-4 text-left text-sm font-semibold text-slate-900">${escapeHtml(weather)}</th>
+            ${cols}
+          </tr>
+        `;
+      }).join('');
+
+      return `
+        <section>
+          <div class="mb-5 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+            <div class="flex flex-wrap items-center gap-3">
+              <h3 class="text-2xl font-bold text-slate-900">${escapeHtml(title)}</h3>
+            </div>
+          </div>
+          <div class="glass overflow-x-auto rounded-2xl">
+            <table class="min-w-full border-collapse">
+              <thead>
+                <tr>
+                  <th class="border border-gray-200 bg-slate-50 px-4 py-4 text-left text-sm font-semibold text-slate-900">Weather \\ Road Type</th>
+                  <th class="border border-gray-200 bg-slate-50 px-4 py-4 text-left text-sm font-semibold text-slate-900">Highways</th>
+                  <th class="border border-gray-200 bg-slate-50 px-4 py-4 text-left text-sm font-semibold text-slate-900">Urban</th>
+                  <th class="border border-gray-200 bg-slate-50 px-4 py-4 text-left text-sm font-semibold text-slate-900">Low-light</th>
+                </tr>
+              </thead>
+              <tbody>${rows}</tbody>
+            </table>
+          </div>
+        </section>
+      `;
+    }
+
+
+    async function loadReleaseCatalog() {
+      const showcaseRoot = document.getElementById('showcase-root');
+      const downloadsRoot = document.getElementById('downloads-root');
+      try {
+        const response = await fetch('assets/data/release_catalog.json', { cache: 'no-store' });
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+        const catalog = await response.json();
+
+        const showcaseHtml = [
+          buildShowcaseSection((catalog.showcase.road || []).slice(0, 3)),
+        ].join('');
+        showcaseRoot.innerHTML = showcaseHtml;
+
+        const allAssets = catalog.assets || [];
+        const downloadsHtml = buildDownloadTable('All Assets', allAssets);
+        downloadsRoot.innerHTML = downloadsHtml;
+      } catch (error) {
+        const message = `
+          <div class="glass rounded-2xl p-8 text-center text-red-500">
+            Failed to load release catalog. Please make sure <span class="font-mono">assets/data/release_catalog.json</span> exists.
+          </div>
+        `;
+        showcaseRoot.innerHTML = message;
+        downloadsRoot.innerHTML = message;
+        console.error(error);
+      }
+    }
+
+    loadReleaseCatalog();
+  </script>
+</body>
+</html>

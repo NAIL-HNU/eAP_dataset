@@ -1,0 +1,452 @@
+{
+  "showcase": {
+    "road": [
+      {
+        "label": "Urban",
+        "asset_id": "OBneIVg4Cw",
+        "video_path": "assets/videos/OBneIVg4Cw__Twilight__Urban__non-HDR.mp4",
+        "weather_en": "Twilight",
+        "road_type_en": "Urban",
+        "hdr_group": "non-HDR"
+      },
+      {
+        "label": "Highways",
+        "asset_id": "pzJcg1OCfc",
+        "video_path": "assets/videos/pzJcg1OCfc__Highways__HDR.mp4",
+        "weather_en": "Twilight",
+        "road_type_en": "Highways",
+        "hdr_group": "HDR"
+      },
+      {
+        "label": "Low-light",
+        "asset_id": "DGqicHUGWb",
+        "video_path": "assets/videos/DGqicHUGWb__Low-light.mp4",
+        "weather_en": "Night",
+        "road_type_en": "Low-light",
+        "hdr_group": "non-HDR"
+      },
+      {
+        "label": "Highways",
+        "asset_id": "GjMYZjmSQb",
+        "video_path": "assets/videos/GjMYZjmSQb__Highways.mp4",
+        "weather_en": "Cloudy",
+        "road_type_en": "Highways",
+        "hdr_group": "non-HDR"
+      }
+    ],
+    "weather": [
+      {
+        "label": "Twilight",
+        "asset_id": "OBneIVg4Cw",
+        "video_path": "assets/videos/OBneIVg4Cw__Twilight__Urban__non-HDR.mp4",
+        "weather_en": "Twilight",
+        "road_type_en": "Urban",
+        "hdr_group": "non-HDR"
+      },
+      {
+        "label": "Night",
+        "asset_id": "xkiVthsGwf",
+        "video_path": "assets/videos/xkiVthsGwf__Night.mp4",
+        "weather_en": "Night",
+        "road_type_en": "Urban",
+        "hdr_group": "non-HDR"
+      },
+      {
+        "label": "Sunny",
+        "asset_id": "pakWgyPNTL",
+        "video_path": "assets/videos/pakWgyPNTL__Sunny.mp4",
+        "weather_en": "Sunny",
+        "road_type_en": "Urban",
+        "hdr_group": "non-HDR"
+      },
+      {
+        "label": "Cloudy",
+        "asset_id": "nRcwUlHyAd",
+        "video_path": "assets/videos/nRcwUlHyAd__Cloudy.mp4",
+        "weather_en": "Cloudy",
+        "road_type_en": "Urban",
+        "hdr_group": "non-HDR"
+      }
+    ],
+    "hdr": [
+      {
+        "label": "non-HDR",
+        "asset_id": "OBneIVg4Cw",
+        "video_path": "assets/videos/OBneIVg4Cw__Twilight__Urban__non-HDR.mp4",
+        "weather_en": "Twilight",
+        "road_type_en": "Urban",
+        "hdr_group": "non-HDR"
+      },
+      {
+        "label": "HDR",
+        "asset_id": "pzJcg1OCfc",
+        "video_path": "assets/videos/pzJcg1OCfc__Highways__HDR.mp4",
+        "weather_en": "Twilight",
+        "road_type_en": "Highways",
+        "hdr_group": "HDR"
+      }
+    ]
+  },
+  "assets": [
+    {
+      "asset_id": "OBneIVg4Cw",
+      "zip_name": "OBneIVg4Cw.zip",
+      "weather": "Twilight",
+      "road_type": "Urban",
+      "dropbox_url": "",
+      "size_bytes": "",
+      "sha256": ""
+    },
+    {
+      "asset_id": "pzJcg1OCfc",
+      "zip_name": "pzJcg1OCfc.zip",
+      "weather": "Twilight",
+      "road_type": "Highways",
+      "dropbox_url": "",
+      "size_bytes": "",
+      "sha256": ""
+    },
+    {
+      "asset_id": "2Y46OkK3ff",
+      "zip_name": "2Y46OkK3ff.zip",
+      "weather": "Twilight",
+      "road_type": "Highways",
+      "dropbox_url": "",
+      "size_bytes": "",
+      "sha256": ""
+    },
+    {
+      "asset_id": "WbCh1DRerJ",
+      "zip_name": "WbCh1DRerJ.zip",
+      "weather": "Twilight",
+      "road_type": "Highways",
+      "dropbox_url": "",
+      "size_bytes": "",
+      "sha256": ""
+    },
+    {
+      "asset_id": "5ilM1PX2vz",
+      "zip_name": "5ilM1PX2vz.zip",
+      "weather": "Twilight",
+      "road_type": "Highways",
+      "dropbox_url": "",
+      "size_bytes": "",
+      "sha256": ""
+    },
+    {
+      "asset_id": "Po6ePjWYAz",
+      "zip_name": "Po6ePjWYAz.zip",
+      "weather": "Twilight",
+      "road_type": "Highways",
+      "dropbox_url": "",
+      "size_bytes": "",
+      "sha256": ""
+    },
+    {
+      "asset_id": "qGsgzl4Q8B",
+      "zip_name": "qGsgzl4Q8B.zip",
+      "weather": "Twilight",
+      "road_type": "Highways",
+      "dropbox_url": "",
+      "size_bytes": "",
+      "sha256": ""
+    },
+    {
+      "asset_id": "Z30i8WuL2N",
+      "zip_name": "Z30i8WuL2N.zip",
+      "weather": "Twilight",
+      "road_type": "Highways",
+      "dropbox_url": "",
+      "size_bytes": "",
+      "sha256": ""
+    },
+    {
+      "asset_id": "xkiVthsGwf",
+      "zip_name": "xkiVthsGwf.zip",
+      "weather": "Night",
+      "road_type": "Urban",
+      "dropbox_url": "",
+      "size_bytes": "",
+      "sha256": ""
+    },
+    {
+      "asset_id": "8mNnrXjpVB",
+      "zip_name": "8mNnrXjpVB.zip",
+      "weather": "Night",
+      "road_type": "Urban",
+      "dropbox_url": "",
+      "size_bytes": "",
+      "sha256": ""
+    },
+    {
+      "asset_id": "2JkLL5W891",
+      "zip_name": "2JkLL5W891.zip",
+      "weather": "Night",
+      "road_type": "Urban",
+      "dropbox_url": "",
+      "size_bytes": "",
+      "sha256": ""
+    },
+    {
+      "asset_id": "6h5yRW2LGc",
+      "zip_name": "6h5yRW2LGc.zip",
+      "weather": "Night",
+      "road_type": "Urban",
+      "dropbox_url": "",
+      "size_bytes": "",
+      "sha256": ""
+    },
+    {
+      "asset_id": "DGqicHUGWb",
+      "zip_name": "DGqicHUGWb.zip",
+      "weather": "Night",
+      "road_type": "Low-light",
+      "dropbox_url": "",
+      "size_bytes": "",
+      "sha256": ""
+    },
+    {
+      "asset_id": "pakWgyPNTL",
+      "zip_name": "pakWgyPNTL.zip",
+      "weather": "Sunny",
+      "road_type": "Urban",
+      "dropbox_url": "",
+      "size_bytes": "",
+      "sha256": ""
+    },
+    {
+      "asset_id": "2cyv0Oedzg",
+      "zip_name": "2cyv0Oedzg.zip",
+      "weather": "Sunny",
+      "road_type": "Urban",
+      "dropbox_url": "",
+      "size_bytes": "",
+      "sha256": ""
+    },
+    {
+      "asset_id": "8SdieOgbva",
+      "zip_name": "8SdieOgbva.zip",
+      "weather": "Sunny",
+      "road_type": "Urban",
+      "dropbox_url": "",
+      "size_bytes": "",
+      "sha256": ""
+    },
+    {
+      "asset_id": "6WCDpro5rE",
+      "zip_name": "6WCDpro5rE.zip",
+      "weather": "Sunny",
+      "road_type": "Urban",
+      "dropbox_url": "",
+      "size_bytes": "",
+      "sha256": ""
+    },
+    {
+      "asset_id": "qoohcdtLDH",
+      "zip_name": "qoohcdtLDH.zip",
+      "weather": "Sunny",
+      "road_type": "Urban",
+      "dropbox_url": "",
+      "size_bytes": "",
+      "sha256": ""
+    },
+    {
+      "asset_id": "EuFGqTcqIz",
+      "zip_name": "EuFGqTcqIz.zip",
+      "weather": "Sunny",
+      "road_type": "Highways",
+      "dropbox_url": "",
+      "size_bytes": "",
+      "sha256": ""
+    },
+    {
+      "asset_id": "LMHPShQkaU",
+      "zip_name": "LMHPShQkaU.zip",
+      "weather": "Sunny",
+      "road_type": "Highways",
+      "dropbox_url": "",
+      "size_bytes": "",
+      "sha256": ""
+    },
+    {
+      "asset_id": "9ITOs4twfk",
+      "zip_name": "9ITOs4twfk.zip",
+      "weather": "Sunny",
+      "road_type": "Highways",
+      "dropbox_url": "",
+      "size_bytes": "",
+      "sha256": ""
+    },
+    {
+      "asset_id": "mHGFBekt7X",
+      "zip_name": "mHGFBekt7X.zip",
+      "weather": "Sunny",
+      "road_type": "Highways",
+      "dropbox_url": "",
+      "size_bytes": "",
+      "sha256": ""
+    },
+    {
+      "asset_id": "vWp9XNYQ9V",
+      "zip_name": "vWp9XNYQ9V.zip",
+      "weather": "Sunny",
+      "road_type": "Highways",
+      "dropbox_url": "",
+      "size_bytes": "",
+      "sha256": ""
+    },
+    {
+      "asset_id": "A1Nhv0KtmL",
+      "zip_name": "A1Nhv0KtmL.zip",
+      "weather": "Sunny",
+      "road_type": "Highways",
+      "dropbox_url": "",
+      "size_bytes": "",
+      "sha256": ""
+    },
+    {
+      "asset_id": "OYgB6RGWcq",
+      "zip_name": "OYgB6RGWcq.zip",
+      "weather": "Sunny",
+      "road_type": "Highways",
+      "dropbox_url": "",
+      "size_bytes": "",
+      "sha256": ""
+    },
+    {
+      "asset_id": "VLA3oBKFyX",
+      "zip_name": "VLA3oBKFyX.zip",
+      "weather": "Sunny",
+      "road_type": "Highways",
+      "dropbox_url": "",
+      "size_bytes": "",
+      "sha256": ""
+    },
+    {
+      "asset_id": "t79dBxj1WS",
+      "zip_name": "t79dBxj1WS.zip",
+      "weather": "Sunny",
+      "road_type": "Highways",
+      "dropbox_url": "",
+      "size_bytes": "",
+      "sha256": ""
+    },
+    {
+      "asset_id": "nRcwUlHyAd",
+      "zip_name": "nRcwUlHyAd.zip",
+      "weather": "Cloudy",
+      "road_type": "Urban",
+      "dropbox_url": "",
+      "size_bytes": "",
+      "sha256": ""
+    },
+    {
+      "asset_id": "pBqGOb2vYq",
+      "zip_name": "pBqGOb2vYq.zip",
+      "weather": "Cloudy",
+      "road_type": "Urban",
+      "dropbox_url": "",
+      "size_bytes": "",
+      "sha256": ""
+    },
+    {
+      "asset_id": "EllUE6bwVp",
+      "zip_name": "EllUE6bwVp.zip",
+      "weather": "Cloudy",
+      "road_type": "Urban",
+      "dropbox_url": "",
+      "size_bytes": "",
+      "sha256": ""
+    },
+    {
+      "asset_id": "rhYxPcU29n",
+      "zip_name": "rhYxPcU29n.zip",
+      "weather": "Cloudy",
+      "road_type": "Urban",
+      "dropbox_url": "",
+      "size_bytes": "",
+      "sha256": ""
+    },
+    {
+      "asset_id": "q2k6O0X6JY",
+      "zip_name": "q2k6O0X6JY.zip",
+      "weather": "Cloudy",
+      "road_type": "Highways",
+      "dropbox_url": "",
+      "size_bytes": "",
+      "sha256": ""
+    },
+    {
+      "asset_id": "CzyQ8HKP6X",
+      "zip_name": "CzyQ8HKP6X.zip",
+      "weather": "Cloudy",
+      "road_type": "Highways",
+      "dropbox_url": "",
+      "size_bytes": "",
+      "sha256": ""
+    },
+    {
+      "asset_id": "L36QTEoVkB",
+      "zip_name": "L36QTEoVkB.zip",
+      "weather": "Cloudy",
+      "road_type": "Highways",
+      "dropbox_url": "",
+      "size_bytes": "",
+      "sha256": ""
+    },
+    {
+      "asset_id": "JaGC4Q9pgU",
+      "zip_name": "JaGC4Q9pgU.zip",
+      "weather": "Cloudy",
+      "road_type": "Highways",
+      "dropbox_url": "",
+      "size_bytes": "",
+      "sha256": ""
+    },
+    {
+      "asset_id": "eX8t2nGd6O",
+      "zip_name": "eX8t2nGd6O.zip",
+      "weather": "Cloudy",
+      "road_type": "Highways",
+      "dropbox_url": "",
+      "size_bytes": "",
+      "sha256": ""
+    },
+    {
+      "asset_id": "wE9MZUmiJP",
+      "zip_name": "wE9MZUmiJP.zip",
+      "weather": "Cloudy",
+      "road_type": "Highways",
+      "dropbox_url": "",
+      "size_bytes": "",
+      "sha256": ""
+    },
+    {
+      "asset_id": "34K84TaN11",
+      "zip_name": "34K84TaN11.zip",
+      "weather": "Cloudy",
+      "road_type": "Highways",
+      "dropbox_url": "",
+      "size_bytes": "",
+      "sha256": ""
+    },
+    {
+      "asset_id": "GjMYZjmSQb",
+      "zip_name": "GjMYZjmSQb.zip",
+      "weather": "Cloudy",
+      "road_type": "Highways",
+      "dropbox_url": "",
+      "size_bytes": "",
+      "sha256": ""
+    },
+    {
+      "asset_id": "ClXqVoZOFu",
+      "zip_name": "ClXqVoZOFu.zip",
+      "weather": "Cloudy",
+      "road_type": "Highways",
+      "dropbox_url": "",
+      "size_bytes": "",
+      "sha256": ""
+    }
+  ]
+}
