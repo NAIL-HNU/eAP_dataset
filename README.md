@@ -169,3 +169,6 @@ Key options:
 > python release_visualizer/visualize_release_sequence.py ...
 > ```
 
+---
+
+![banner](assets/imgs/banner.png)
