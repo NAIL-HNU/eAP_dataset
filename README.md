@@ -4,8 +4,9 @@
 
 **The largest multi-modal dataset with event cameras for autonomous driving perception.**
 
-  
-*Click to watch on YouTube*
+![banner](assets/imgs/banner.png)
+
+[![Watch on YouTube](https://img.youtube.com/vi/6nuFrPViD3U/maxresdefault.jpg)](https://www.youtube.com/watch?v=6nuFrPViD3U)
 
 ## Citation
 
