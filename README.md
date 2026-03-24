@@ -4,9 +4,15 @@
 
 **The largest multi-modal dataset with event cameras for autonomous driving perception.**
 
-![banner](assets/imgs/banner.png)
+<p align="center">
+<a href="https://www.youtube.com/watch?v=6nuFrPViD3U">
+  <img src="https://img.youtube.com/vi/6nuFrPViD3U/maxresdefault.jpg" alt="eAP Dataset Overview" width="600"/>
+</a>
+</p>
 
-[![Watch on YouTube](https://img.youtube.com/vi/6nuFrPViD3U/maxresdefault.jpg)](https://www.youtube.com/watch?v=6nuFrPViD3U)
+<p align="center">
+  <a href="https://nail-hnu.github.io/eAP_dataset/">🌐 Project Page</a>
+</p>
 
 ## Citation
 
@@ -162,5 +168,4 @@ Key options:
 > env OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 KMP_INIT_AT_FORK=FALSE \
 > python release_visualizer/visualize_release_sequence.py ...
 > ```
-
 
